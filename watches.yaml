@@ -1,0 +1,5 @@
+---
+- version: v1alpha1
+  group: sysdig.com
+  kind: Sysdig
+  chart: /opt/helm/helm-charts/sysdig
