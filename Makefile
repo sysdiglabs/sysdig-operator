@@ -1,11 +1,13 @@
 IMAGE = sysdiglabs/sysdig-operator
 # Use same version than helm chart
-VERSION = v1.3.2
+VERSION = 1.4.0
 
 .PHONY: build
 
 build:
+	helm fetch stable/sysdig --version $(VERSION) --untar --untardir helm-charts/
 	operator-sdk build $(IMAGE):$(VERSION)
+	rm -fr helm-charts/sysdig
 
 push:
 	docker push $(IMAGE):$(VERSION)
