@@ -2,14 +2,14 @@ apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   creationTimestamp: null
-  name: sysdigs.sysdig.com
+  name: sysdigagents.sysdig.com
 spec:
   group: sysdig.com
   names:
-    kind: Sysdig
-    listKind: SysdigList
-    plural: sysdigs
-    singular: sysdig
+    kind: SysdigAgent
+    listKind: SysdigAgentList
+    plural: sysdigagents
+    singular: sysdigagent
   scope: Namespaced
   subresources:
     status: {}
@@ -22,15 +22,15 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: sysdig-operator
+  name: sysdig-agent-operator
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: sysdig-operator
+  name: sysdig-agent-operator
 subjects:
 - kind: ServiceAccount
-  name: sysdig-operator
+  name: sysdig-agent-operator
   namespace: default
 roleRef:
   kind: ClusterRole
@@ -40,22 +40,22 @@ roleRef:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sysdig-operator
+  name: sysdig-agent-operator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: sysdig-operator
+      name: sysdig-agent-operator
   template:
     metadata:
       labels:
-        name: sysdig-operator
+        name: sysdig-agent-operator
     spec:
-      serviceAccountName: sysdig-operator
+      serviceAccountName: sysdig-agent-operator
       containers:
-        - name: sysdig-operator
+        - name: sysdig-agent-operator
           # Replace this with the built image name
-          image: docker.io/sysdiglabs/sysdig-operator:1.4.0
+          image: docker.io/sysdiglabs/sysdig-agent-operator:1.4.0
           ports:
           - containerPort: 60000
             name: metrics
@@ -70,4 +70,4 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
-              value: "sysdig-operator"
+              value: "sysdig-agent-operator"

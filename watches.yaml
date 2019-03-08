@@ -1,5 +1,5 @@
 ---
 - version: v1alpha1
   group: sysdig.com
-  kind: Sysdig
+  kind: SysdigAgent
   chart: /opt/helm/helm-charts/sysdig

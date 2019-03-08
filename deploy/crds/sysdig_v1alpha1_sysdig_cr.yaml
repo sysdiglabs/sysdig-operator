@@ -1,7 +1,7 @@
 apiVersion: sysdig.com/v1alpha1
-kind: Sysdig
+kind: SysdigAgent
 metadata:
-  name: example-sysdig
+  name: example-sysdigagent
 spec:
   sysdig:
     accessKey: ACCESS_KEY

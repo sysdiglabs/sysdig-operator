@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sysdig-operator
+  name: sysdig-agent-operator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: sysdig-operator
+      name: sysdig-agent-operator
   template:
     metadata:
       labels:
-        name: sysdig-operator
+        name: sysdig-agent-operator
     spec:
-      serviceAccountName: sysdig-operator
+      serviceAccountName: sysdig-agent-operator
       containers:
-        - name: sysdig-operator
+        - name: sysdig-agent-operator
           # Replace this with the built image name
           image: REPLACE_IMAGE
           ports:
@@ -31,4 +31,4 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
-              value: "sysdig-operator"
+              value: "sysdig-agent-operator"
