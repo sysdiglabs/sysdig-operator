@@ -71,7 +71,7 @@ NAME                                                              READY   STATUS
 agent-with-ebpf-and-secure-9wexzni4dib601y2ik5kc1vi5-sysdi2w9m4   1/1     Running   0          2m
 agent-with-ebpf-and-secure-9wexzni4dib601y2ik5kc1vi5-sysdil8d9q   1/1     Running   0          2m
 agent-with-ebpf-and-secure-9wexzni4dib601y2ik5kc1vi5-sysdiv2vgs   1/1     Running   0          2m
-sysdig-agent-operator-7f6cf49bb4-cwxcn                            1/1     Running   0          2m
+sysdig-operator-7f6cf49bb4-cwxcn                                  1/1     Running   0          2m
 ```
 
 ## Removal

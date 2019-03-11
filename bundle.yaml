@@ -22,15 +22,15 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: sysdig-agent-operator
+  name: sysdig-operator
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: sysdig-agent-operator
+  name: sysdig-operator
 subjects:
 - kind: ServiceAccount
-  name: sysdig-agent-operator
+  name: sysdig-operator
   namespace: default
 roleRef:
   kind: ClusterRole
@@ -40,22 +40,22 @@ roleRef:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sysdig-agent-operator
+  name: sysdig-operator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: sysdig-agent-operator
+      name: sysdig-operator
   template:
     metadata:
       labels:
-        name: sysdig-agent-operator
+        name: sysdig-operator
     spec:
-      serviceAccountName: sysdig-agent-operator
+      serviceAccountName: sysdig-operator
       containers:
-        - name: sysdig-agent-operator
+        - name: sysdig-operator
           # Replace this with the built image name
-          image: docker.io/sysdiglabs/sysdig-agent-operator:1.4.0
+          image: docker.io/sysdiglabs/sysdig-operator:1.4.0
           ports:
           - containerPort: 60000
             name: metrics
@@ -70,4 +70,4 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
-              value: "sysdig-agent-operator"
+              value: "sysdig-operator"

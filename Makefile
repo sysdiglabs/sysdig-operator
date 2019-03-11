@@ -1,4 +1,4 @@
-IMAGE = sysdiglabs/sysdig-agent-operator
+IMAGE = sysdiglabs/sysdig-operator
 # Use same version than helm chart
 VERSION = 1.4.0
 

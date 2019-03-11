@@ -10,7 +10,7 @@ metadata:
     certified: "false"
     description: |-
       [Sysdig](https://www.sysdig.com/) is a unified platform for container and microservices monitoring, troubleshooting, security and forensics. Sysdig platform has been built on top of [Sysdig tool](https://sysdig.com/opensource/sysdig/) and [Sysdig Inspect](https://sysdig.com/blog/sysdig-inspect/) open-source technologies.
-    containerImage: docker.io/sysdiglabs/sysdig-agent-operator:1.4.0
+    containerImage: docker.io/sysdiglabs/sysdig-operator:1.4.0
     createdAt: 2019-03-08T18:30:00Z
     support: Sysdig, Inc.
 spec:
@@ -52,18 +52,18 @@ spec:
   install:
     spec:
       deployments:
-      - name: sysdig-agent-operator
+      - name: sysdig-operator
         spec:
           replicas: 1
           selector:
             matchLabels:
-              name: sysdig-agent-operator
+              name: sysdig-operator
           strategy: {}
           template:
             metadata:
               creationTimestamp: null
               labels:
-                name: sysdig-agent-operator
+                name: sysdig-operator
             spec:
               containers:
               - env:
@@ -76,15 +76,15 @@ spec:
                     fieldRef:
                       fieldPath: metadata.name
                 - name: OPERATOR_NAME
-                  value: sysdig-agent-operator
-                image: docker.io/sysdiglabs/sysdig-agent-operator:1.4.0
+                  value: sysdig-operator
+                image: docker.io/sysdiglabs/sysdig-operator:1.4.0
                 imagePullPolicy: Always
-                name: sysdig-agent-operator
+                name: sysdig-operator
                 ports:
                 - containerPort: 60000
                   name: metrics
                 resources: {}
-              serviceAccountName: sysdig-agent-operator
+              serviceAccountName: sysdig-operator
     strategy: deployment
   maturity: Basic Install
   provider: {}
