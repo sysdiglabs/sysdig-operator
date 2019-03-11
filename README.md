@@ -60,8 +60,8 @@ spec:
     accessKey: XXX
 ```
 
-Please, notice that `sysdig.accessKey` is mandatory. Once you have provided the
-accessKey, you can apply this file with `kubectl apply -f`
+Please, notice that `sysdig.accessKey` is **mandatory**. Once you have provided
+the accessKey, you can apply this file with `kubectl apply -f`
 
 And then you can see you pods with the Sysdig Agent deployed:
 
