@@ -1,4 +1,4 @@
-packageName: sysdig
+packageName: sysdig-certified
 channels:
 - name: stable
   currentCSV: sysdig-operator.vREPLACE_VERSION
