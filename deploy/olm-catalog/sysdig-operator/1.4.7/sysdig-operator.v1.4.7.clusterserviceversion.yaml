@@ -2,7 +2,37 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   annotations:
-    alm-examples: '[{"apiVersion":"sysdig.com/v1alpha1","kind":"SysdigAgent","metadata":{"name":"example-sysdigagent"},"spec":{"sysdig":{"accessKey":"ACCESS_KEY"}}}]'
+    alm-examples: |-
+      [{
+        "apiVersion": "sysdig.com/v1alpha1",
+        "kind": "SysdigAgent",
+        "metadata": {
+          "name": "basic-agent-deployment"
+        },
+        "spec": {
+          "sysdig": {
+            "accessKey": "XXX"
+          }
+        }
+      },
+      {
+        "apiVersion": "sysdig.com/v1alpha1",
+        "kind": "SysdigAgent",
+        "metadata": {
+          "name": "agent-with-ebpf-and-secure-enabled"
+        },
+        "spec": {
+          "ebpf": {
+            "enabled": true
+          },
+          "secure": {
+            "enabled": true
+          },
+          "sysdig": {
+            "accessKey": "XXX"
+          }
+        }
+      }]
     capabilities: Basic Install
     categories: Security, Monitoring
     certified: "false"
