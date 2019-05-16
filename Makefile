@@ -21,12 +21,12 @@ push:
 bundle.yaml:
 	cat deploy/crds/sysdig_v1alpha1_sysdig_crd.yaml > bundle.yaml
 	echo '---' >> bundle.yaml
-	sed -i 's|REPLACE_IMAGE|docker.io/$(IMAGE):$(VERSION)|g' deploy/operator.yaml
 	cat deploy/service_account.yaml >> bundle.yaml
 	echo '---' >> bundle.yaml
 	cat deploy/role_binding.yaml >> bundle.yaml
 	echo '---' >> bundle.yaml
 	cat deploy/operator.yaml >> bundle.yaml
+	sed -i 's|REPLACE_IMAGE|docker.io/$(IMAGE):$(VERSION)|g' deploy/bundle.yaml
 
 e2e: bundle.yaml
 	kubectl apply -f bundle.yaml
