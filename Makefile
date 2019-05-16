@@ -6,6 +6,7 @@ CERTIFIED_IMAGE = registry.connect.redhat.com/sysdig/sysdig-operator
 # Eventually it will use the same tag than VERSION
 CERTIFIED_IMAGE_VERSION = 1.4.0-e5365ddec6d6
 
+
 .PHONY: build bundle.yaml
 
 build:
@@ -53,3 +54,12 @@ package-redhat:
 		redhat-certification/sysdig-operator.v${VERSION}.clusterserviceversion.yaml
 	\
 	git checkout redhat-certification
+
+new-upstream: bundle.yaml build push package-redhat
+	sed -i "s/^VERSION = .*/VERSION = $(VERSION)/" Makefile
+	git add bundle.yaml
+	git add Makefile
+	git commit -m "New Sysdig helm chart release $(VERSION)"
+	git tag -f v$(VERSION)-sysdig-operator-helm
+	GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git push origin HEAD:master
+	GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git push --tags
