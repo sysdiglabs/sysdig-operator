@@ -60,6 +60,6 @@ new-upstream: bundle.yaml build push package-redhat
 	git add bundle.yaml
 	git add Makefile
 	git commit -m "New Sysdig helm chart release $(VERSION)"
-	git tag -f v$(VERSION)-sysdig-operator-helm
+	git tag -f v$(VERSION)
 	GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git push origin HEAD:master
 	GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git push --tags
