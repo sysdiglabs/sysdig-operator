@@ -55,7 +55,7 @@ spec:
       containers:
         - name: sysdig-operator
           # Replace this with the built image name
-          image: docker.io/sysdiglabs/sysdig-operator:1.4.0
+          image: docker.io/sysdiglabs/sysdig-operator:1.4.7
           ports:
           - containerPort: 60000
             name: metrics

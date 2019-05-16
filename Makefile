@@ -1,6 +1,6 @@
 IMAGE = sysdiglabs/sysdig-operator
 # Use same version than helm chart
-VERSION = 1.4.0
+VERSION = 1.4.7
 
 CERTIFIED_IMAGE = registry.connect.redhat.com/sysdig/sysdig-operator
 # Eventually it will use the same tag than VERSION
