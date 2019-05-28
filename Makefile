@@ -26,7 +26,7 @@ bundle.yaml:
 	cat deploy/role_binding.yaml >> bundle.yaml
 	echo '---' >> bundle.yaml
 	cat deploy/operator.yaml >> bundle.yaml
-	sed -i 's|REPLACE_IMAGE|docker.io/$(IMAGE):$(VERSION)|g' deploy/bundle.yaml
+	sed -i 's|REPLACE_IMAGE|docker.io/$(IMAGE):$(VERSION)|g' bundle.yaml
 
 e2e: bundle.yaml
 	kubectl apply -f bundle.yaml
