@@ -63,7 +63,7 @@ new-upstream: bundle.yaml build push operatorhub package-redhat
 	git commit -m "New Sysdig helm chart release $(VERSION)"
 	git tag -f v$(VERSION)
 	GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git push origin HEAD:master
-	GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git push --tags
+	GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git push --tags -f
 
 operatorhub:
 	mkdir -p deploy/olm-catalog/sysdig-operator/$(VERSION)
