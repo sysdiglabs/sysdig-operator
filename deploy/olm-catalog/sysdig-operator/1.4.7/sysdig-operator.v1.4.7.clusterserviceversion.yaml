@@ -237,5 +237,5 @@ spec:
     name: Néstor Salceda
   provider:
     name: Sysdig
-  replaces: sysdig-operator.v1.4.0
+  replaces: sysdig-operator.v1.4.7
   version: 1.4.7
