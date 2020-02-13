@@ -2,4 +2,4 @@
 - version: v1alpha1
   group: sysdig.com
   kind: SysdigAgent
-  chart: /opt/helm/helm-charts/sysdig
+  chart: helm-charts/sysdig
