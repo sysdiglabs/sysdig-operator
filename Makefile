@@ -1,7 +1,8 @@
 IMAGE = sysdiglabs/sysdig-operator
 # Use same version than helm chart
 PREVIOUS_VERSION = $(shell ls -d deploy/olm-catalog/sysdig-operator/*/ -t | head -n1 | cut -d"/" -f4)
-VERSION = 1.7.2
+VERSION = 1.7.7
+AGENT_VERSION = 9.8.0
 
 CERTIFIED_IMAGE = registry.connect.redhat.com/sysdig/sysdig-operator
 # Eventually it will use the same tag than VERSION
@@ -27,6 +28,7 @@ bundle.yaml:
 	echo '---' >> bundle.yaml
 	cat deploy/operator.yaml >> bundle.yaml
 	sed -i 's|REPLACE_IMAGE|docker.io/$(IMAGE):$(VERSION)|g' bundle.yaml
+	sed -i 's|REPLACE_AGENT_VERSION|$(AGENT_VERSION)|g' bundle.yaml
 
 e2e: bundle.yaml
 	kubectl apply -f bundle.yaml
