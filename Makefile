@@ -70,6 +70,7 @@ new-upstream: bundle.yaml build push operatorhub package-redhat
 operatorhub:
 	mkdir -p deploy/olm-catalog/sysdig-operator/$(VERSION)
 	cp deploy/olm-catalog/sysdig-operator/sysdig-operator.template.clusterserviceversion.yaml deploy/olm-catalog/sysdig-operator/$(VERSION)/sysdig-operator.v$(VERSION).clusterserviceversion.yaml
+	sed -i "s/AGENT_VERSION/$(AGENT_VERSION)/" deploy/olm-catalog/sysdig-operator/$(VERSION)/sysdig-operator.v$(VERSION).clusterserviceversion.yaml
 	sed -i "s/PREVIOUS_VERSION/$(PREVIOUS_VERSION)/" deploy/olm-catalog/sysdig-operator/$(VERSION)/sysdig-operator.v$(VERSION).clusterserviceversion.yaml
 	sed -i "s/VERSION/$(VERSION)/" deploy/olm-catalog/sysdig-operator/$(VERSION)/sysdig-operator.v$(VERSION).clusterserviceversion.yaml
 	git add deploy/olm-catalog/sysdig-operator/$(VERSION)/sysdig-operator.v$(VERSION).clusterserviceversion.yaml
