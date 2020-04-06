@@ -3,3 +3,7 @@
   group: sysdig.com
   kind: SysdigAgent
   chart: helm-charts/sysdig
+  overrideValues:
+    image.registry: ${RELATED_IMAGE_REGISTRY_DAEMONSET}
+    image.repository: ${RELATED_IMAGE_REPOSITORY_DAEMONSET}
+    image.tag: ${RELATED_IMAGE_TAG_DAEMONSET}

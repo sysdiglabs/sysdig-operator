@@ -77,7 +77,7 @@ spec:
     | ---                             | ---                                                                    | ---                                         |
     | `image.registry`                | Sysdig agent image registry                                            | `docker.io`                                 |
     | `image.repository`              | The image repository to pull from                                      | `sysdig/agent`                              |
-    | `image.tag`                     | The image tag to pull                                                  | `0.89.5`                                    |
+    | `image.tag`                     | The image tag to pull                                                  | `9.5.0`                                     |
     | `image.pullPolicy`              | The Image pull policy                                                  | `IfNotPresent`                              |
     | `image.pullSecrets`             | Image pull secrets                                                     | `nil`                                       |
     | `resources.requests.cpu`        | CPU requested for being run in a node                                  | `100m`                                      |
@@ -196,6 +196,12 @@ spec:
                       fieldPath: metadata.name
                 - name: OPERATOR_NAME
                   value: sysdig-operator
+                - name: RELATED_IMAGE_REGISTRY_DAEMONSET
+                  value: docker.io
+                - name: RELATED_IMAGE_REPOSITORY_DAEMONSET
+                  value: sysdig/agent
+                - name: RELATED_IMAGE_TAG_DAEMONSET
+                  value: 9.5.0
                 image: docker.io/sysdiglabs/sysdig-operator:VERSION
                 imagePullPolicy: Always
                 name: sysdig-operator
