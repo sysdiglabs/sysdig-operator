@@ -55,7 +55,7 @@ spec:
       containers:
         - name: sysdig-operator
           # Replace this with the built image name
-          image: docker.io/sysdiglabs/sysdig-operator:1.7.2
+          image: docker.io/sysdiglabs/sysdig-operator:1.7.7
           ports:
           - containerPort: 60000
             name: metrics
@@ -69,3 +69,9 @@ spec:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
               value: "sysdig-operator"
+            - name: RELATED_IMAGE_REGISTRY_DAEMONSET
+              value: "docker.io"
+            - name: RELATED_IMAGE_REPOSITORY_DAEMONSET
+              value: "sysdig/agent"
+            - name: RELATED_IMAGE_TAG_DAEMONSET
+              value: 9.8.0
