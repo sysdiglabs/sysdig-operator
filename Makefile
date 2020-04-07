@@ -1,13 +1,11 @@
 IMAGE = sysdiglabs/sysdig-operator
 # Use same version than helm chart
 PREVIOUS_VERSION = $(shell ls -d deploy/olm-catalog/sysdig-operator/*/ -t | head -n1 | cut -d"/" -f4)
-VERSION = 1.7.7
-AGENT_VERSION = 9.8.0
-
+VERSION = 1.7.8
 CERTIFIED_IMAGE = registry.connect.redhat.com/sysdig/sysdig-operator
-# Eventually it will use the same tag than VERSION
-CERTIFIED_IMAGE_VERSION = 1.4.0-e5365ddec6d6
 
+CERTIFIED_AGENT_IMAGE = registry.connect.redhat.com/sysdig/agent
+AGENT_VERSION = 9.8.0
 
 .PHONY: build bundle.yaml
 
