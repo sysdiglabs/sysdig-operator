@@ -9,10 +9,12 @@ AGENT_VERSION = 9.8.0
 
 .PHONY: build bundle.yaml
 
-build:
-	helm fetch stable/sysdig --version $(VERSION) --untar --untardir helm-charts/
+build: update-chart
 	operator-sdk build $(IMAGE):$(VERSION)
+
+update-chart:
 	rm -fr helm-charts/sysdig
+	helm fetch stable/sysdig --version $(VERSION) --untar --untardir helm-charts/
 
 push:
 	docker push $(IMAGE):$(VERSION)
