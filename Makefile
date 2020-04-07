@@ -45,7 +45,7 @@ package-redhat:
 	\
 	sed -i 's|REPLACE_VERSION|${VERSION}|g' redhat-certification/sysdig-operator.v${VERSION}.clusterserviceversion.yaml
 	sed -i 's|REPLACE_IMAGE|${CERTIFIED_IMAGE}|g' redhat-certification/sysdig-operator.v${VERSION}.clusterserviceversion.yaml
-	sed -i 's|REPLACE_CERTIFIED_VERSION|${CERTIFIED_IMAGE_VERSION}|g' redhat-certification/sysdig-operator.v${VERSION}.clusterserviceversion.yaml
+	sed -i 's|REPLACE_AGENT_IMAGE|${CERTIFIED_AGENT_IMAGE}|g' redhat-certification/sysdig-operator.v${VERSION}.clusterserviceversion.yaml
 	sed -i 's|REPLACE_AGENT_VERSION|${AGENT_VERSION}|g' redhat-certification/sysdig-operator.v${VERSION}.clusterserviceversion.yaml
 	sed -i 's|REPLACE_VERSION|${VERSION}|g' redhat-certification/sysdig.package.yaml
 	\

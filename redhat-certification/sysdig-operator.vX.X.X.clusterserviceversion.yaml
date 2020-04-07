@@ -219,13 +219,9 @@ spec:
                       fieldPath: metadata.name
                 - name: OPERATOR_NAME
                   value: sysdig-operator
-                - name: RELATED_IMAGE_REGISTRY_DAEMONSET
-                  value: docker.io
-                - name: RELATED_IMAGE_REPOSITORY_DAEMONSET
-                  value: sysdig/agent
-                - name: RELATED_IMAGE_TAG_DAEMONSET
-                  value: REPLACE_AGENT_VERSION
-                image: REPLACE_IMAGE:REPLACE_CERTIFIED_VERSION
+                - name: RELATED_IMAGE_DAEMONSET
+                  value: REPLACE_AGENT_IMAGE:REPLACE_AGENT_VERSION
+                image: REPLACE_IMAGE:REPLACE_VERSION
                 imagePullPolicy: Always
                 name: sysdig-operator
                 ports:
