@@ -5,3 +5,4 @@
   chart: helm-charts/sysdig
   overrideValues:
     image.overrideValue: ${RELATED_IMAGE_DAEMONSET}
+    scc.create: true
