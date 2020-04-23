@@ -47,7 +47,7 @@ For example, if you want to deploy a DaemonSet with eBPF and with Sysdig Secure
 enabled:
 
 ```yaml
-apiVersion: sysdig.com/v1alpha1
+apiVersion: sysdig.com/v1
 kind: SysdigAgent
 metadata:
   name: agent-with-ebpf-and-secure

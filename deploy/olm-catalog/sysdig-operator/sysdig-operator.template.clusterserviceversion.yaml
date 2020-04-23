@@ -4,7 +4,7 @@ metadata:
   annotations:
     alm-examples: |-
       [{
-        "apiVersion": "sysdig.com/v1alpha1",
+        "apiVersion": "sysdig.com/v1",
         "kind": "SysdigAgent",
         "metadata": {
           "name": "basic-agent-deployment"
@@ -16,7 +16,7 @@ metadata:
         }
       },
       {
-        "apiVersion": "sysdig.com/v1alpha1",
+        "apiVersion": "sysdig.com/v1",
         "kind": "SysdigAgent",
         "metadata": {
           "name": "agent-with-ebpf-and-secure-enabled"
@@ -53,7 +53,7 @@ spec:
       displayName: Sysdig Agent daemonSet
       kind: SysdigAgent
       name: sysdigagents.sysdig.com
-      version: v1alpha1
+      version: v1
   description: |-
     [Sysdig](https://www.sysdig.com/) is a unified platform for container and
     microservices monitoring, troubleshooting, security and forensics. Sysdig
@@ -100,7 +100,7 @@ spec:
     enabled:
 
     ```yaml
-    apiVersion: sysdig.com/v1alpha1
+    apiVersion: sysdig.com/v1
     kind: SysdigAgent
     metadata:
       name: agent-with-ebpf-and-secure
