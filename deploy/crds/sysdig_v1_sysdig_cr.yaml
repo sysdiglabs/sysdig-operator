@@ -1,4 +1,4 @@
-apiVersion: sysdig.com/v1alpha1
+apiVersion: sysdig.com/v1
 kind: SysdigAgent
 metadata:
   name: example-sysdigagent
