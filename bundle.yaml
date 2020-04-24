@@ -13,11 +13,17 @@ spec:
   scope: Namespaced
   subresources:
     status: {}
-  version: v1
+  validation:
+    openAPIV3Schema:
+      type: object
+      x-kubernetes-preserve-unknown-fields: true
   versions:
   - name: v1
     served: true
     storage: true
+  - name: v1alpha1
+    served: false
+    storage: false
 ---
 apiVersion: v1
 kind: ServiceAccount
