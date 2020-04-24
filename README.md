@@ -63,6 +63,14 @@ Or even check the events happened while the operator was installing:
 
 ![Operator Events](https://github.com/sysdiglabs/sysdig-operator/blob/master/images/operator-events.png)
 
+So, next step is to instruct our operator to deploy the Sysdig Agent. Click in Create SysdigAgent button:
+
+![SysdigAgent Installation](https://github.com/sysdiglabs/sysdig-operator/blob/master/images/agent-installation.png)
+
+And you will see the screen where you can configure the parameters for the Sysdig Agent. You will need to replace the accessKey for the key that Sysdig provided you:
+
+![SysdigAgent settings](https://github.com/sysdiglabs/sysdig-operator/blob/master/images/agent-settings.png)
+
 ### Install verification steps
 
 Once the Operator is listed as `Succeeded` and `Up to date`:
