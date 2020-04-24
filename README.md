@@ -55,6 +55,14 @@ Then you will need to configure the operator subscrption:
 
 You need to specify a specify namespace on the cluster where the agent will be installed and an approval strategy if you want to automatically upgrade the running version of the operator without human intervention.
 
+Next you can check the operator is successfully installed.
+
+![Operator Installed](https://github.com/sysdiglabs/sysdig-operator/blob/master/images/operator-installed.png)
+
+Or even check the events happened while the operator was installing:
+
+![Operator Events](https://github.com/sysdiglabs/sysdig-operator/blob/master/images/operator-events.png)
+
 ### Install verification steps
 
 Once the Operator is listed as `Succeeded` and `Up to date`:
