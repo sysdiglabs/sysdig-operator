@@ -12,6 +12,27 @@ This operator deploys the Sysdig agent for [Sysdig Monitor](https://sysdig.com/p
 * [Host requirements](https://docs.sysdig.com/en/host-requirements-for-agent-installation.html)
 * [Sysdig agent access key](https://docs.sysdig.com/en/agent-installation--overview-and-key.html)
 
+### Minimum required cluster config / cluster resources
+
+At a minimum, each Sysdig agent requires 2% of total CPU of the host and 512 MiB of memory.
+
+Default limits and requests are detailed in the table below, these parameters are customizable:
+
+| Parameter                   | Description                              | Default  |
+| ---                         | ---                                      | ---      |
+| `resources.requests.cpu`    | CPU requested for being run in a node    | `100m`   |
+| `resources.requests.memory` | Memory requested for being run in a node | `512Mi`  |
+| `resources.limits.cpu`      | CPU limit                                | `200m`   |
+| `resources.limits.memory`   | Memory limit                             | `1024Mi` |
+
+### Architecture support
+
+* The Sysdig agent currently supports x86/AMD64 architectures
+
+### Storage requirements
+
+* The Sysdig agent doesn't require any additional persistent volumes containing stateful data
+
 ## Quickstart
 
 To quickly try out **just** the Sysdig Agent Operator inside a cluster, run the following command:
@@ -46,46 +67,6 @@ basic-agent-deployment-sysdig-99rvx   1/1     Running   0          19m
 basic-agent-deployment-sysdig-mjjst   1/1     Running   0          19m
 basic-agent-deployment-sysdig-zrrnc   1/1     Running   0          19m
 sysdig-operator-86c489b6fd-7tmd5      1/1     Running   0          22m
-```
-
-
-### Minimum required cluster config / cluster resources
-
-At a minimum, each Sysdig agent requires 2% of total CPU of the host and 512 MiB of memory.
-
-Default limits and requests are detailed in the table below, these parameters are customizable:
-
-| Parameter                   | Description                              | Default  |
-| ---                         | ---                                      | ---      |
-| `resources.requests.cpu`    | CPU requested for being run in a node    | `100m`   |
-| `resources.requests.memory` | Memory requested for being run in a node | `512Mi`  |
-| `resources.limits.cpu`      | CPU limit                                | `200m`   |
-| `resources.limits.memory`   | Memory limit                             | `1024Mi` |
-
-### Architecture support
-
-* The Sysdig agent currently supports x86/AMD64 architectures
-
-### Storage requirements
-
-* The Sysdig agent doesn't require any additional persistent volumes containing stateful data
-
-### Install verification steps
-
-Once the Operator has finished the install and is listed as `Succeeded` and `Up to date`:
-
-You can verify the agents are deployed (exactly one per node) in `Running` status and `READY`. The Sysdig operator pod itself will also be `Running` and `READY`:
-
-```
-$ oc get pods -n sysdig-agent  # Replace sysdig-agent with the namespace you used to install
-NAME                                  READY   STATUS    RESTARTS   AGE
-basic-agent-deployment-sysdig-24xpm   1/1     Running   0          6m1s
-basic-agent-deployment-sysdig-6ngpv   1/1     Running   0          6m1s
-basic-agent-deployment-sysdig-8q79t   1/1     Running   0          6m1s
-basic-agent-deployment-sysdig-99rvx   1/1     Running   0          6m1s
-basic-agent-deployment-sysdig-mjjst   1/1     Running   0          6m1s
-basic-agent-deployment-sysdig-zrrnc   1/1     Running   0          6m1s
-sysdig-operator-86c489b6fd-7tmd5      1/1     Running   0          8m47s
 ```
 
 ## Settings
