@@ -28,8 +28,7 @@ Access the OperatorHub inside the OpenShift interface (`Operators -> OperatorHub
 
 ![OperatorHub Sysdig](https://github.com/sysdiglabs/sysdig-operator/blob/master/images/operatorhub-sysdig.png)
 
-
-## Install verification steps
+### Install verification steps
 
 Once the Operator is listed as `Succeeded` and `Up to date`:
 
@@ -50,34 +49,30 @@ sysdig-operator-86c489b6fd-7tmd5      1/1     Running   0          22m
 ```
 
 
-## Minimum required cluster config / cluster resources
+### Minimum required cluster config / cluster resources
 
 At a minimum, each Sysdig agent requires 2% of total CPU of the host and 512 MiB of memory.
 
 Default limits and requests are detailed in the table below, these parameters are customizable:
 
-| Parameter                       | Description                                                            | Default                                     |
-| ---                             | ---                                                                    | ---             
-| `resources.requests.cpu`        | CPU requested for being run in a node                                  | `100m`                                      |
-| `resources.requests.memory`     | Memory requested for being run in a node                               | `512Mi`                                     |
-| `resources.limits.cpu`          | CPU limit                                                              | `200m`                                      |
-| `resources.limits.memory`       | Memory limit                                                           | `1024Mi`                                    |
+| Parameter                   | Description                              | Default  |
+| ---                         | ---                                      | ---      |
+| `resources.requests.cpu`    | CPU requested for being run in a node    | `100m`   |
+| `resources.requests.memory` | Memory requested for being run in a node | `512Mi`  |
+| `resources.limits.cpu`      | CPU limit                                | `200m`   |
+| `resources.limits.memory`   | Memory limit                             | `1024Mi` |
 
-## Architecture support
+### Architecture support
 
 * The Sysdig agent currently supports x86/AMD64 architectures
 
-## Storage requirements
+### Storage requirements
 
 * The Sysdig agent doesn't require any additional persistent volumes containing stateful data
 
+### Install verification steps
 
-
-## Install verification steps
-
-Once the Operator has finished the install and is listed as `Succeeded` and `Up to date`: 
-
-
+Once the Operator has finished the install and is listed as `Succeeded` and `Up to date`:
 
 You can verify the agents are deployed (exactly one per node) in `Running` status and `READY`. The Sysdig operator pod itself will also be `Running` and `READY`:
 
@@ -97,28 +92,40 @@ sysdig-operator-86c489b6fd-7tmd5      1/1     Running   0          8m47s
 
 This operator, uses the same options than the [Helm Chart](https://hub.helm.sh/charts/stable/sysdig), please take a look to all the options in the following table:
 
-| Parameter                       | Description                                                            | Default                                     |
-| ---                             | ---                                                                    | ---                                         |
-| `image.registry`                | Sysdig agent image registry                                            | `docker.io`                                 |
-| `image.repository`              | The image repository to pull from                                      | `sysdig/agent`                              |
-| `image.tag`                     | The image tag to pull                                                  | `0.89.0`                                    |
-| `image.pullPolicy`              | The Image pull policy                                                  | `IfNotPresent`                              |
-| `image.pullSecrets`             | Image pull secrets                                                     | `nil`                                       |
-| `resources.requests.cpu`        | CPU requested for being run in a node                                  | `100m`                                      |
-| `resources.requests.memory`     | Memory requested for being run in a node                               | `512Mi`                                     |
-| `resources.limits.cpu`          | CPU limit                                                              | `200m`                                      |
-| `resources.limits.memory`       | Memory limit                                                           | `1024Mi`                                    |
-| `rbac.create`                   | If true, create & use RBAC resources                                   | `true`                                      |
-| `serviceAccount.create`         | Create serviceAccount                                                  | `true`                                      |
-| `serviceAccount.name`           | Use this value as serviceAccountName                                   | ` `                                         |
-| `daemonset.updateStrategy.type` | The updateStrategy for updating the daemonset                          | `RollingUpdate`                             |
-| `ebpf.enabled`                  | Enable eBPF support for Sysdig instead of `sysdig-probe` kernel module | `false`                                     |
-| `ebpf.settings.mountEtcVolume`  | Needed to detect which kernel version are running in Google COS        | `true`                                      |
-| `sysdig.accessKey`              | Your Sysdig Monitor Access Key                                         | `Nil` You must provide your own key         |
-| `sysdig.settings`               | Settings for agent's configuration file                                | `{}`                                        |
-| `secure.enabled`                | Enable Sysdig Secure                                                   | `false`                                     |
-| `customAppChecks`               | The custom app checks deployed with your agent                         | `{}`                                        |
-| `tolerations`                   | The tolerations for scheduling                                         | `node-role.kubernetes.io/master:NoSchedule` |
+| Parameter                         | Description                                                            | Default                                     |
+| ---                               | ---                                                                    | ---                                         |
+| `image.registry`                  | Sysdig Agent image registry                                            | `docker.io`                                 |
+| `image.repository`                | The image repository to pull from                                      | `sysdig/agent`                              |
+| `image.tag`                       | The image tag to pull                                                  | `9.9.1`                                     |
+| `image.pullPolicy`                | The Image pull policy                                                  | `IfNotPresent`                              |
+| `image.pullSecrets`               | Image pull secrets                                                     | `nil`                                       |
+| `resources.requests.cpu`          | CPU requested for being run in a node                                  | `600m`                                      |
+| `resources.requests.memory`       | Memory requested for being run in a node                               | `512Mi`                                     |
+| `resources.limits.cpu`            | CPU limit                                                              | `2000m`                                     |
+| `resources.limits.memory`         | Memory limit                                                           | `1536Mi`                                    |
+| `rbac.create`                     | If true, create & use RBAC resources                                   | `true`                                      |
+| `serviceAccount.create`           | Create serviceAccount                                                  | `true`                                      |
+| `serviceAccount.name`             | Use this value as serviceAccountName                                   | ` `                                         |
+| `daemonset.updateStrategy.type`   | The updateStrategy for updating the daemonset                          | `RollingUpdate`                             |
+| `daemonset.affinity`              | Node affinities                                                        | `nil`                                       |
+| `daemonset.nodeSelector`          | Node selector                                                          | `kubernetes.io/arch:amd64`                  |
+| `slim.enabled`                    | Use the slim based Sysdig Agent image                                  | `false`                                     |
+| `slim.kmoduleImage.repository`    | The kernel module image builder repository to pull from                | `sysdig/agent-kmodule`                      |
+| `slim.resources.requests.cpu`     | CPU requested for building the kernel module                           | `1000m`                                     |
+| `slim.resources.requests.memory`  | Memory requested for building the kernel module                        | `348Mi`                                     |
+| `slim.resources.limits.memory`    | Memory limit for building the kernel module                            | `512Mi`                                     |
+| `ebpf.enabled`                    | Enable eBPF support for Sysdig instead of `sysdig-probe` kernel module | `false`                                     |
+| `ebpf.settings.mountEtcVolume`    | Needed to detect which kernel version are running in Google COS        | `true`                                      |
+| `sysdig.accessKey`                | Your Sysdig Monitor Access Key                                         | `Nil` You must provide your own key         |
+| `sysdig.settings`                 | Settings for agent's configuration file                                | ` `                                         |
+| `secure.enabled`                  | Enable Sysdig Secure                                                   | `true`                                      |
+| `auditLog.enabled`                | Enable K8s audit log support for Sysdig Secure                         | `false`                                     |
+| `auditLog.auditServerUrl`         | The URL where Sysdig Agent listens for K8s audit log events            | `0.0.0.0`                                   |
+| `auditLog.auditServerPort`        | Port where Sysdig Agent listens for K8s audit log events               | `7765`                                      |
+| `auditLog.dynamicBackend.enabled` | Deploy the Audit Sink where Sysdig listens for K8s audit log events    | `false`                                     |
+| `customAppChecks`                 | The custom app checks deployed with your agent                         | `{}`                                        |
+| `tolerations`                     | The tolerations for scheduling                                         | `node-role.kubernetes.io/master:NoSchedule` |
+| `scc.create`                      | Create OpenShift's Security Context Constraint                         | `false`                                     |
 
 For example, if you want to deploy a DaemonSet with eBPF and with Sysdig Secure
 enabled:
