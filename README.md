@@ -49,11 +49,9 @@ Access the OperatorHub inside the OpenShift interface (`Operators -> OperatorHub
 
 ![OperatorHub Sysdig](https://github.com/sysdiglabs/sysdig-operator/blob/master/images/operatorhub-sysdig.png)
 
-Then you will need to configure the operator subscrption:
+For configuring the operator subscription, you need to specify a specify namespace on the cluster where the agent will be installed and an approval strategy if you want to automatically upgrade the running version of the operator without human intervention.
 
 ![Operator Subscription](https://github.com/sysdiglabs/sysdig-operator/blob/master/images/operator-subscription.png)
-
-You need to specify a specify namespace on the cluster where the agent will be installed and an approval strategy if you want to automatically upgrade the running version of the operator without human intervention.
 
 Next you can check the operator is successfully installed.
 
