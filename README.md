@@ -6,6 +6,12 @@ The Sysdig Agent Operator for Kubernetes provides an easy way to deploy Sysdig
 
 This operator deploys the Sysdig agent for [Sysdig Monitor](https://sysdig.com/product/monitor/) and [Sysdig Secure](https://sysdig.com/product/secure/) to all nodes in your cluster via a DaemonSet.
 
+## Pre-requisites
+
+* Cluster-admin access to Kubernetes/OpenShift
+* [Host requirements](https://docs.sysdig.com/en/host-requirements-for-agent-installation.html)
+* [Sysdig agent access key](https://docs.sysdig.com/en/agent-installation--overview-and-key.html)
+
 ## Quickstart
 
 To quickly try out **just** the Sysdig Agent Operator inside a cluster, run the following command:
@@ -15,6 +21,77 @@ kubectl apply -f https://raw.githubusercontent.com/sysdiglabs/sysdig-operator/ma
 ```
 
 This command deploys the operator itself and its dependencies: Custom Resource Definitions, ServiceAccount and its ClusterRoleBinding.
+
+## Installation walkthrough
+
+Access the OperatorHub inside the OpenShift interface (`Operators -> OperatorHub`). Searching by `sysdig` you will see the Sysdig Operator:
+
+![OperatorHub Sysdig](https://github.com/sysdiglabs/sysdig-operator/blob/master/images/operatorhub-sysdig.png)
+
+
+## Install verification steps
+
+Once the Operator is listed as `Succeeded` and `Up to date`:
+
+![Sysdig Operator Ready](https://github.com/sysdiglabs/sysdig-operator/blob/master/images/sysdig-operator-ready.png)
+
+You can verify that all the agents (you should have exactly one per node) are `READY` and in `Running` state. The Sysdig operator itself should also be `READY` and in `Running` state:
+
+```
+$ oc get pods -n sysdig-agent
+NAME                                  READY   STATUS    RESTARTS   AGE
+basic-agent-deployment-sysdig-24xpm   1/1     Running   0          19m
+basic-agent-deployment-sysdig-6ngpv   1/1     Running   0          19m
+basic-agent-deployment-sysdig-8q79t   1/1     Running   0          19m
+basic-agent-deployment-sysdig-99rvx   1/1     Running   0          19m
+basic-agent-deployment-sysdig-mjjst   1/1     Running   0          19m
+basic-agent-deployment-sysdig-zrrnc   1/1     Running   0          19m
+sysdig-operator-86c489b6fd-7tmd5      1/1     Running   0          22m
+```
+
+
+## Minimum required cluster config / cluster resources
+
+At a minimum, each Sysdig agent requires 2% of total CPU of the host and 512 MiB of memory.
+
+Default limits and requests are detailed in the table below, these parameters are customizable:
+
+| Parameter                       | Description                                                            | Default                                     |
+| ---                             | ---                                                                    | ---             
+| `resources.requests.cpu`        | CPU requested for being run in a node                                  | `100m`                                      |
+| `resources.requests.memory`     | Memory requested for being run in a node                               | `512Mi`                                     |
+| `resources.limits.cpu`          | CPU limit                                                              | `200m`                                      |
+| `resources.limits.memory`       | Memory limit                                                           | `1024Mi`                                    |
+
+## Architecture support
+
+* The Sysdig agent currently supports x86/AMD64 architectures
+
+## Storage requirements
+
+* The Sysdig agent doesn't require any additional persistent volumes containing stateful data
+
+
+
+## Install verification steps
+
+Once the Operator has finished the install and is listed as `Succeeded` and `Up to date`: 
+
+
+
+You can verify the agents are deployed (exactly one per node) in `Running` status and `READY`. The Sysdig operator pod itself will also be `Running` and `READY`:
+
+```
+$ oc get pods -n sysdig-agent  # Replace sysdig-agent with the namespace you used to install
+NAME                                  READY   STATUS    RESTARTS   AGE
+basic-agent-deployment-sysdig-24xpm   1/1     Running   0          6m1s
+basic-agent-deployment-sysdig-6ngpv   1/1     Running   0          6m1s
+basic-agent-deployment-sysdig-8q79t   1/1     Running   0          6m1s
+basic-agent-deployment-sysdig-99rvx   1/1     Running   0          6m1s
+basic-agent-deployment-sysdig-mjjst   1/1     Running   0          6m1s
+basic-agent-deployment-sysdig-zrrnc   1/1     Running   0          6m1s
+sysdig-operator-86c489b6fd-7tmd5      1/1     Running   0          8m47s
+```
 
 ## Settings
 
