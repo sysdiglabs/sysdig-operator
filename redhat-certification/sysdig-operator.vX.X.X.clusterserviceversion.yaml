@@ -21,6 +21,13 @@ metadata:
           "name": "basic-agent-deployment"
         },
         "spec": {
+          "daemonset" : {
+            "annotations": {
+              "productID": SysdigSecureDevopsPlatform
+              "productName": Sysdig Secure DevOps Platform
+              "productVersion": REPLACE_VERSION
+            }
+          },
           "scc": {
             "create": true
           },
@@ -38,6 +45,13 @@ metadata:
         "spec": {
           "ebpf": {
             "enabled": true
+          },
+          "daemonset" : {
+            "annotations": {
+              "productID": SysdigSecureDevopsPlatform
+              "productName": Sysdig Secure DevOps Platform
+              "productVersion": REPLACE_VERSION
+            }
           },
           "scc": {
             "create": true
@@ -91,7 +105,7 @@ spec:
     | `serviceAccount.name`             | Use this value as serviceAccountName                                   | ` `                                         |
     | `daemonset.updateStrategy.type`   | The updateStrategy for updating the daemonset                          | `RollingUpdate`                             |
     | `daemonset.affinity`              | Node affinities                                                        | `nil`                                       |
-    | `daemonset.nodeSelector`          | Node selector                                                          | `kubernetes.io/arch:amd64`                  |
+    | `daemonset.annotations`           | Custom annotations for daemonset                                       | `{}`                                        |
     | `slim.enabled`                    | Use the slim based Sysdig Agent image                                  | `false`                                     |
     | `slim.kmoduleImage.repository`    | The kernel module image builder repository to pull from                | `sysdig/agent-kmodule`                      |
     | `slim.resources.requests.cpu`     | CPU requested for building the kernel module                           | `1000m`                                     |
@@ -121,8 +135,11 @@ spec:
     spec:
       ebpf:
         enabled: true
-      secure:
-        enabled: true
+      daemonset:
+        annotations:
+          productID: SysdigSecureDevopsPlatform
+          productName: Sysdig Secure DevOps Platform
+          productVersion: REPLACE_VERSION
       scc:
         create: true
       sysdig:
