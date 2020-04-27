@@ -178,6 +178,8 @@ spec:
 
 The Sysdig agent generates log entries in `/opt/draios/logs/draios.log`. The agent will rotate out the log file when it reaches 10MB in size, keeping the 10 most recent log files archived with a date-stamp appended to the filename.
 
+In case you prefer to output the debug information directly to the standard output (to be collected by fluentd or similar) you can also set `console_priority: debug` at the same level that the `file_priority` attribute. More information [here](https://docs.sysdig.com/en/change-agent-log-level.html)
+
 ## Removal
 
 Just run the `kubectl delete` command to remove the operator and its dependencies.
