@@ -159,6 +159,25 @@ agent-with-ebpf-and-secure-9wexzni4dib601y2ik5kc1vi5-sysdiv2vgs   1/1     Runnin
 sysdig-operator-7f6cf49bb4-cwxcn                                  1/1     Running   0          2m
 ```
 
+## Debugging agent operation
+
+To run the agent in debug mode, you need to edit the `SysdigAgent` resource to add the following logging option:
+
+```
+apiVersion: sysdig.com/v1
+kind: SysdigAgent
+metadata:
+  name: basic-agent-deployment
+  namespace: default
+spec:
+  sysdig:
+    accessKey: XXX
+    log:
+      file_priority: debug
+```
+
+The Sysdig agent generates log entries in `/opt/draios/logs/draios.log`. The agent will rotate out the log file when it reaches 10MB in size, keeping the 10 most recent log files archived with a date-stamp appended to the filename.
+
 ## Removal
 
 Just run the `kubectl delete` command to remove the operator and its dependencies.
