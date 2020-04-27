@@ -23,9 +23,9 @@ metadata:
         "spec": {
           "daemonset" : {
             "annotations": {
-              "productID": SysdigSecureDevopsPlatform
-              "productName": Sysdig Secure DevOps Platform
-              "productVersion": REPLACE_VERSION
+              "productID": "SysdigSecureDevopsPlatform",
+              "productName": "Sysdig Secure DevOps Platform",
+              "productVersion": "REPLACE_VERSION"
             }
           },
           "scc": {
@@ -48,9 +48,9 @@ metadata:
           },
           "daemonset" : {
             "annotations": {
-              "productID": SysdigSecureDevopsPlatform
-              "productName": Sysdig Secure DevOps Platform
-              "productVersion": REPLACE_VERSION
+              "productID": "SysdigSecureDevopsPlatform",
+              "productName": "Sysdig Secure DevOps Platform",
+              "productVersion": "REPLACE_VERSION"
             }
           },
           "scc": {
