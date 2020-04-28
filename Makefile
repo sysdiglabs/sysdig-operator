@@ -1,7 +1,7 @@
 IMAGE = sysdiglabs/sysdig-operator
 # Use same version than helm chart
 PREVIOUS_VERSION = $(shell ls -d deploy/olm-catalog/sysdig-operator/*/ -t | head -n1 | cut -d"/" -f4)
-VERSION = 1.7.13-1
+VERSION = 1.7.14
 CERTIFIED_IMAGE = registry.connect.redhat.com/sysdig/sysdig-operator
 
 CERTIFIED_AGENT_IMAGE = registry.connect.redhat.com/sysdig/agent
@@ -40,8 +40,10 @@ e2e-clean: bundle.yaml
 	kubectl delete -f bundle.yaml
 
 package-redhat:
-	cp deploy/crds/sysdig_v1_sysdig_crd.yaml redhat-certification/sysdig.crd.yaml
+	cp deploy/crds/sysdig_v1_sysdig_crd.yaml redhat-certification/sysdig.crd.base.yaml
 	cp redhat-certification/sysdig-operator.vX.X.X.clusterserviceversion.yaml redhat-certification/sysdig-operator.v${VERSION}.clusterserviceversion.yaml
+	\
+	kubectl kustomize redhat-certification > redhat-certification/sysdig.crd.yaml
 	\
 	sed -i 's|REPLACE_VERSION|${VERSION}|g' redhat-certification/sysdig-operator.v${VERSION}.clusterserviceversion.yaml
 	sed -i 's|REPLACE_IMAGE|${CERTIFIED_IMAGE}|g' redhat-certification/sysdig-operator.v${VERSION}.clusterserviceversion.yaml
@@ -55,7 +57,8 @@ package-redhat:
 		redhat-certification/sysdig.package.yaml
 	\
 	rm	redhat-certification/sysdig.crd.yaml \
-		redhat-certification/sysdig-operator.v${VERSION}.clusterserviceversion.yaml
+		redhat-certification/sysdig-operator.v${VERSION}.clusterserviceversion.yaml \
+		redhat-certification/sysdig.crd.base.yaml
 	\
 	git checkout redhat-certification
 

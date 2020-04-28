@@ -18,7 +18,12 @@ metadata:
         "apiVersion": "sysdig.com/v1",
         "kind": "SysdigAgent",
         "metadata": {
-          "name": "basic-agent-deployment"
+          "name": "sysdig-agent",
+          "labels": {
+            "app.kubernetes.io/instance": "sysdig-agent",
+            "app.kubernetes.io/managed-by": "sysdig-operator",
+            "app.kubernetes.io/name": "sysdig-agent"
+          }
         },
         "spec": {
           "daemonset" : {
@@ -40,7 +45,12 @@ metadata:
         "apiVersion": "sysdig.com/v1",
         "kind": "SysdigAgent",
         "metadata": {
-          "name": "agent-with-ebpf"
+          "name": "sysdig-agent-with-ebpf",
+          "labels": {
+            "app.kubernetes.io/instance": "sysdig-agent-with-ebpf",
+            "app.kubernetes.io/managed-by": "sysdig-operator",
+            "app.kubernetes.io/name": "sysdig-agent-with-ebpf"
+          }
         },
         "spec": {
           "ebpf": {
