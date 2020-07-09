@@ -1,7 +1,62 @@
-# Change Log
+# Chart: Sysdig
+
+## Change Log
 
 This file documents all notable changes to Sysdig Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
+
+## v1.8.1
+
+### Minor changes
+
+* Use the latest image from Agent (10.2.0) by default.
+
+### Bug fixes
+
+* Fix logic in template that was disabling captures in the agent settings.
+
+## v1.8.0
+
+### Major changes
+
+* Migrated charts to *sysdiglabs* repository
+
+###  Minor changes
+
+* Add explicit *clusterName* option in values.yaml
+* Add beta.kubernetes.io labels for node affinity, to support older versions
+* SCC deployed by default in Openshift (check API security.openshift.io/v1)
+
+## v1.7.20
+
+###  Minor changes
+
+* Use the latest image from Agent (10.1.1) by default.
+
+## v1.7.19
+
+###  Minor changes
+
+* Use the latest image from Agent (10.1.0) by default.
+
+## v1.7.18
+
+### Minor changes
+
+* Add explicit *disable captures* option to agent settings.
+
+## v1.7.17
+
+### Minor changes
+
+* Add onPrem as explicit option to set collector host, port and settings
+* Fail if no sysdig.accessKey value is provided
+
+## v1.7.16
+
+### Minor changes
+
+* Include support links in README.md
 
 ## v1.7.15
 
@@ -52,7 +107,7 @@ numbering uses [semantic versioning](http://semver.org).
 
 ### Minor changes
 
-* Add a image.overrideValue value which is a hack to support
+* Add an image.overrideValue value which is a hack to support
   RELATED_IMAGE_<identifier> feature in Helm based operators.
 
 ## v1.7.7

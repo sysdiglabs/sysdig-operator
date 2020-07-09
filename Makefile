@@ -1,11 +1,11 @@
 IMAGE = sysdiglabs/sysdig-operator
 # Use same version than helm chart
 PREVIOUS_VERSION = $(shell ls -d deploy/olm-catalog/sysdig-operator/*/ -t | head -n1 | cut -d"/" -f4)
-VERSION = 1.7.15
+VERSION = 1.8.3
 CERTIFIED_IMAGE = registry.connect.redhat.com/sysdig/sysdig-operator
 
 CERTIFIED_AGENT_IMAGE = registry.connect.redhat.com/sysdig/agent
-AGENT_VERSION = 10.0.0
+AGENT_VERSION = 10.2.0
 
 .PHONY: build bundle.yaml
 
@@ -14,7 +14,8 @@ build: update-chart
 
 update-chart:
 	rm -fr helm-charts/sysdig
-	helm fetch stable/sysdig --version $(VERSION) --untar --untardir helm-charts/
+	helm repo add sysdiglabs https://sysdiglabs.github.io/charts
+	helm fetch sysdiglabs/sysdig --version $(VERSION) --untar --untardir helm-charts/
 
 push:
 	docker push $(IMAGE):$(VERSION)
@@ -31,13 +32,13 @@ bundle.yaml:
 	sed -i 's|REPLACE_AGENT_VERSION|$(AGENT_VERSION)|g' bundle.yaml
 
 e2e: bundle.yaml
-	kubectl apply -f bundle.yaml
+	oc apply -f bundle.yaml
 	sed -i 's|ACCESS_KEY|${SYSDIG_AGENT_ACCESS_KEY}|g' deploy/crds/sysdig_v1_sysdig_cr.yaml
-	kubectl apply -f deploy/crds/sysdig_v1_sysdig_cr.yaml
+	oc apply -f deploy/crds/sysdig_v1_sysdig_cr.yaml
 
 e2e-clean: bundle.yaml
-	kubectl delete -f deploy/crds/sysdig_v1_sysdig_cr.yaml
-	kubectl delete -f bundle.yaml
+	oc delete -f deploy/crds/sysdig_v1_sysdig_cr.yaml
+	oc delete -f bundle.yaml
 
 package-redhat:
 	cp deploy/crds/sysdig_v1_sysdig_crd.yaml redhat-certification/sysdig.crd.base.yaml

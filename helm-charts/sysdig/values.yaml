@@ -9,7 +9,7 @@ image:
 
   registry: docker.io
   repository: sysdig/agent
-  tag: 10.0.0
+  tag: 10.2.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -34,6 +34,10 @@ resources:
 
 rbac:
   # true here enables creation of rbac resources
+  create: true
+
+scc:
+  # true here enabled creation of Security Context Constraints in Openshift
   create: true
 
 serviceAccount:
@@ -63,6 +67,15 @@ daemonset:
             values:
               - amd64
           - key: kubernetes.io/os
+            operator: In
+            values:
+              - linux
+        - matchExpressions:
+          - key: beta.kubernetes.io/arch
+            operator: In
+            values:
+              - amd64
+          - key: beta.kubernetes.io/os
             operator: In
             values:
               - linux
@@ -108,24 +121,27 @@ slim:
     limits:
       memory: 512Mi
 
+# Set onPrem.enabled=true and set corresponding fields for Sysdig On-Prem installations
+onPrem:
+  enabled: false
+  collectorHost:
+  collectorPort: 6443
+  ssl: true
+  sslVerifyCertificate: true
+
+# Setting a cluster name allows you to filter events from this cluster using kubernetes.cluster.name
+clusterName: ""
+
 sysdig:
-  # Required: You need your Sysdig Monitor access key before running agents.
+  # Required: You need your Sysdig Agent access key before running agents.
   accessKey: ""
+
+  # Disable capture functionality (see https://docs.sysdig.com/en/disable-captures.html)
+  disableCaptures: false
 
   settings: {}
     ### Agent tags
     # tags: linux:ubuntu,dept:dev,local:nyc
-    #### Sysdig Software related config ####
-    # Sysdig collector address
-    # collector: 192.168.1.1
-    # Collector TCP port
-    # collector_port: 6666
-    # Whether collector accepts ssl
-    # ssl: true
-    # collector certificate validation
-    # ssl_verify_certificate: true
-    #######################################
-    # k8s_cluster_name: production
 
 secure:
   # true here enables Sysdig Secure: container run-time security & forensics
@@ -140,9 +156,6 @@ auditLog:
   dynamicBackend:
     # true here configures an AuditSink who will receive the K8s audit logs
     enabled: false
-
-scc:
-  create: false
 
 customAppChecks: {}
   # Allow passing custom app checks for Sysdig Agent.
@@ -159,3 +172,30 @@ customAppChecks: {}
 tolerations:
   - effect: NoSchedule
     key: node-role.kubernetes.io/master
+
+# Promscrape prometheus.yaml not configured by default
+prometheus:
+  file: false
+  yaml: {}
+
+extraVolumes:
+  volumes: []
+  mounts: []
+  # Allow passing extra volumes to the agent to mount secrets or certificates
+  # to authenticate in different services.
+  # Any kind of volume can be passed. Example:
+  #
+  # extraVolumes:
+  #   volumes:
+  #     - name: sysdig-new-cm
+  #       configMap:
+  #         name: my-cm
+  #         optional: true
+  #     - name: sysdig-new-secret
+  #       secret:
+  #         secretName: my-secret
+  #   mounts:
+  #     - mountPath: /opt/draios/cm
+  #       name: sysdig-new-cm
+  #     - mountPath: /opt/draios/secret
+  #       name: sysdig-new-secret
