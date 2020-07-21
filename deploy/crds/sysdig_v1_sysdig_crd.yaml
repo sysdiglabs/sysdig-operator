@@ -19,16 +19,8 @@ spec:
   version: v1
   versions:
   - name: v1
-    schema:
-      openAPIV3Schema:
-        type: object
-        x-kubernetes-preserve-unknown-fields: true
     served: true
     storage: true
   - name: v1alpha1
-    schema:
-      openAPIV3Schema:
-        type: object
-        x-kubernetes-preserve-unknown-fields: true
     served: false
     storage: false
