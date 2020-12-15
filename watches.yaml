@@ -3,4 +3,6 @@
   version: v1
   kind: SysdigAgent
   chart: helm-charts/sysdig
+  overrideValues:
+    image.overrideValue: ${RELATED_IMAGE_DAEMONSET}
 # +kubebuilder:scaffold:watch
