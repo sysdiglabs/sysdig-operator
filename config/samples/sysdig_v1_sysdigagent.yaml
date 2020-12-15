@@ -1,0 +1,127 @@
+apiVersion: sysdig.com/v1
+kind: SysdigAgent
+metadata:
+  name: sysdigagent-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/sysdig/values.yaml
+  auditLog:
+    auditServerPort: 7765
+    auditServerUrl: 0.0.0.0
+    dynamicBackend:
+      enabled: false
+    enabled: false
+  clusterName: ""
+  collectorSettings:
+    collectorHost: null
+    collectorPort: null
+    ssl: null
+    sslVerifyCertificate: null
+  customAppChecks: {}
+  daemonset:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
+            - key: kubernetes.io/os
+              operator: In
+              values:
+              - linux
+          - matchExpressions:
+            - key: beta.kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
+            - key: beta.kubernetes.io/os
+              operator: In
+              values:
+              - linux
+    annotations: {}
+    env: {}
+    nodeSelector: {}
+    updateStrategy:
+      type: RollingUpdate
+  ebpf:
+    enabled: false
+    settings:
+      mountEtcVolume: true
+  extraVolumes:
+    mounts: []
+    volumes: []
+  image:
+    overrideValue: null
+    pullPolicy: IfNotPresent
+    registry: docker.io
+    repository: sysdig/agent
+    tag: 10.7.0
+  nodeImageAnalyzer:
+    deploy: true
+    extraVolumes:
+      mounts: []
+      volumes: []
+    image:
+      pullPolicy: IfNotPresent
+      repository: sysdig/node-image-analyzer
+      tag: 0.1.6
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1024Mi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+    settings:
+      debug: false
+      httpProxy: null
+      httpsProxy: null
+      noProxy: null
+  priorityClassName: null
+  prometheus:
+    file: false
+    yaml: {}
+  proxy:
+    httpProxy: null
+    httpsProxy: null
+    noProxy: null
+  psp:
+    create: true
+  rbac:
+    create: true
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 1536Mi
+    requests:
+      cpu: 600m
+      memory: 512Mi
+  scc:
+    create: true
+  secure:
+    enabled: true
+  serviceAccount:
+    create: true
+    name: null
+  slim:
+    enabled: false
+    kmoduleImage:
+      repository: sysdig/agent-kmodule
+    resources:
+      limits:
+        memory: 512Mi
+      requests:
+        cpu: 1000m
+        memory: 348Mi
+  sysdig:
+    accessKey: ""
+    disableCaptures: false
+    settings: {}
+  timezone: null
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+  
+  

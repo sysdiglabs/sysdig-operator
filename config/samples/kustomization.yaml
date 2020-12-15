@@ -1,0 +1,4 @@
+## Append samples you want in your CSV to this file as resources ##
+resources:
+- sysdig_v1_sysdigagent.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples
