@@ -1,0 +1,20 @@
+# permissions for end users to view sysdigagents.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sysdigagent-viewer-role
+rules:
+- apiGroups:
+  - sysdig.com
+  resources:
+  - sysdigagents
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - sysdig.com
+  resources:
+  - sysdigagents/status
+  verbs:
+  - get

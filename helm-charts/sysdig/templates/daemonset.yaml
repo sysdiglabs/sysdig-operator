@@ -4,6 +4,7 @@ kind: DaemonSet
 metadata:
   name: {{ template "sysdig.fullname" . }}
   labels:
+    app.kubernetes.io/name: {{ include "sysdig.name" . }}
 {{ include "sysdig.labels" . | indent 4 }}
 spec:
   selector:
@@ -14,6 +15,7 @@ spec:
     metadata:
       name: {{ template "sysdig.fullname" .}}
       labels:
+        app.kubernetes.io/name: {{ include "sysdig.name" . }}
 {{ include "sysdig.labels" . | indent 8 }}
       {{- if .Values.daemonset.annotations }}
       annotations:
@@ -30,6 +32,10 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       hostPID: true
       terminationGracePeriodSeconds: 5
+      {{- if .Values.daemonset.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.daemonset.nodeSelector | indent 8 }}
+      {{- end }}
       {{- if .Values.daemonset.affinity }}
       affinity:
 {{ toYaml .Values.daemonset.affinity | indent 8 }}

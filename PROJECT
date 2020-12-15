@@ -1,0 +1,8 @@
+domain: com
+layout: helm.sdk.operatorframework.io/v1
+projectName: sysdig-operator
+resources:
+- group: sysdig
+  kind: SysdigAgent
+  version: v1
+version: 3-alpha

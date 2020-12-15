@@ -1,7 +1,8 @@
----
-- version: v1
-  group: sysdig.com
+# Use the 'create api' subcommand to add watches to this file.
+- group: sysdig.com
+  version: v1
   kind: SysdigAgent
   chart: helm-charts/sysdig
   overrideValues:
     image.overrideValue: ${RELATED_IMAGE_DAEMONSET}
+# +kubebuilder:scaffold:watch

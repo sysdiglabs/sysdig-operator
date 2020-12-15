@@ -5,6 +5,91 @@
 This file documents all notable changes to Sysdig Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v1.11.0
+
+### Major changes
+
+* Node Image Analyzer now deployed by default (`nodeImageAnalyzer.deploy` set to `true` by default)
+* Explain all Node Image Analyzer settings in values.yaml and README, and link to official Sysdig docs
+
+### Minor changes
+
+* Use the latest image from Agent (10.7.0)
+* Change check_certificate to ssl_verify_certificate in NIA settings to sync with NIA configmap
+
+## v1.10.5
+
+* Use the latest image from Node Image Analyzer (0.1.6)
+
+## v1.10.4
+
+* Use the latest image from Agent (10.6.0)
+
+## v1.10.3
+
+### Minor changes
+
+* Add options to add a nodeSelector.
+
+## v1.10.2
+
+### Minor changes
+
+* Use the latest image from Agent (10.5.1)
+
+## v1.10.1
+
+### Minor changes
+
+* Use latest image from Agent (10.5.0)
+* Update documentation for agent connection HTTP proxy settings
+
+## v1.10.0
+
+### New features
+
+* Desploy a PSP and the PSP use permission to allow agent running with the required privileges in PSP enabled clusters.
+
+## v1.9.5
+
+### Minor changes
+
+* Use latest image from Agent (10.4.1)
+
+## v1.9.4
+
+### Minor changes
+
+* Use latest image from Agent (10.4.0)
+
+## v1.9.3
+
+### Minor changes
+
+* Redirect to agents dashboard instead of Explore tab.
+
+## v1.9.2
+
+### Minor changes
+
+* Use latest image from Agent (10.3.0)
+
+## v1.9.1
+
+### Minor changes
+
+* Remove explicit *onPrem* option. Use *collectorSettings* section instead.
+
+## v1.9.0
+
+### Major changes
+
+* Option to deploy the [Node Image Analyzer](https://docs.sysdig.com/en/scan-running-images.html).
+
+### Minor changes
+
+* Include get/list/watch endpoints in agent clusterrole permissions.
+
 ## v1.8.1
 
 ### Minor changes
