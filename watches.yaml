@@ -1,7 +1,0 @@
----
-- version: v1
-  group: sysdig.com
-  kind: SysdigAgent
-  chart: helm-charts/sysdig
-  overrideValues:
-    image.overrideValue: ${RELATED_IMAGE_DAEMONSET}
