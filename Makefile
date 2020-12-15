@@ -12,7 +12,7 @@ endif
 BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 
 # Image URL to use all building/pushing image targets
-IMG ?= docker.io/sysdiglabs/sysdig-operator:$(VERSION)
+IMG ?= registry.connect.redhat.com/sysdig/sysdig-operator:$(VERSION)
 
 all: docker-build
 

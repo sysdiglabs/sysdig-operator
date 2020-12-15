@@ -361,7 +361,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=sysdig-operator
-                image: docker.io/sysdiglabs/sysdig-operator:1.11.0
+                image: registry.connect.redhat.com/sysdig/sysdig-operator:1.11.0
                 name: manager
                 resources:
                   limits:
