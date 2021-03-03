@@ -7,9 +7,9 @@ image:
   # As long as I don't want to people to use this, I will keep it undocumented
   overrideValue:
 
-  registry: docker.io
+  registry: quay.io
   repository: sysdig/agent
-  tag: 10.7.0
+  tag: 11.0.0
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -174,8 +174,8 @@ auditLog:
 nodeImageAnalyzer:
   deploy: true
   image:
-    repository: sysdig/node-image-analyzer
-    tag: 0.1.6
+    repository: quay.io/sysdig/node-image-analyzer
+    tag: 0.1.10
     pullPolicy: IfNotPresent
     # pullSecrets:
     #   - name: myRegistrKeySecretName
