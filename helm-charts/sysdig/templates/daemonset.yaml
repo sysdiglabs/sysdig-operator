@@ -125,7 +125,7 @@ spec:
           livenessProbe:
             exec:
               command: [ "test", "-e", "/opt/draios/logs/running" ]
-            initialDelaySeconds: 10
+            initialDelaySeconds: {{ .Values.daemonset.livenessProbe.initialDelay }}
           volumeMounts:
             {{- if not .Values.slim.enabled }}
             - mountPath: /etc/modprobe.d

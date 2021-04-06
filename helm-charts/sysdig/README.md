@@ -63,6 +63,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `daemonset.nodeSelector`                          | Node Selector                                                                            | `{}`                                        |
 | `daemonset.affinity`                              | Node affinities                                                                          | `schedule on amd64 and linux`               |
 | `daemonset.annotations`                           | Custom annotations for daemonset                                                         | `{}`                                        |
+| `daemonset.livenessProbe.initialDelay`            | Initial delay before the liveness probe for sysdig-agent kicks in.                       | `10`                                        |
 | `slim.enabled`                                    | Use the slim based Sysdig Agent image                                                    | `false`                                     |
 | `slim.kmoduleImage.repository`                    | The kernel module image builder repository to pull from                                  | `sysdig/agent-kmodule`                      |
 | `slim.resources.requests.cpu`                     | CPU requested for building the kernel module                                             | `1000m`                                     |
