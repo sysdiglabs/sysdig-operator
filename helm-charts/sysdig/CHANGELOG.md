@@ -2,8 +2,75 @@
 
 ## Change Log
 
-This file documents all notable changes to Sysdig Helm Chart. The release
-numbering uses [semantic versioning](http://semver.org).
+This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
+
+## v1.11.11
+
+### Minor changes
+
+* Update agent to 11.1.2
+
+## v1.11.10
+
+### Minor changes
+
+* Fix the if in the imageanalyzer extravolumes
+
+## v1.11.9
+
+### Minor changes
+
+* Improvements and fixes in README for installation instructions (use sysdig-agent namespace by default)
+
+## v1.11.8
+
+### Minor changes
+
+* Improvements in CI process and testing
+
+## v1.11.7
+
+### Minor changes
+
+* Update Node Image Analyzer to 0.1.10 by default
+* Fix VERIFY_CERTIFICATE setting for Node Image Analyzer
+
+## v1.11.6
+
+### Minor changes
+
+* Add tolerations configuration item to Node Image Analyzer
+
+## v1.11.5
+
+### Minor Changes
+
+* Fix appversion
+
+## v1.11.4
+
+### Minor Changes
+
+* Use the latest image from Agent (11.0.0)
+
+## v1.11.3
+
+### Minor Changes
+
+* Use the latest image from Agent (10.9.0)
+
+## v1.11.2
+
+### Minor changes
+
+* Allow for customization of liveness and readiness probes initial delay
+
+## v1.11.1
+
+### Minor Changes
+
+* Use the latest image from Agent (10.8.0)
+* Use the latest image from Node Image Analyzer (0.1.7)
 
 ## v1.11.0
 

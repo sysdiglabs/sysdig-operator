@@ -12,16 +12,16 @@ This chart adds the Sysdig agent for [Sysdig Monitor](https://sysdig.com/product
 
 ## Installing the Chart
 
-To install the chart with the release name `my-release`, retrieve your Sysdig Monitor Access Key from your [Account Settings](https://app.sysdigcloud.com/#/settings/agentInstallation) and run:
+To install the chart with the release name `sysdig-agent`, retrieve your Sysdig Monitor Access Key from your [Account Settings](https://app.sysdigcloud.com/#/settings/agentInstallation) and run:
 
 ```bash
-$ helm repo add sysdiglabs https://sysdiglabs.github.io/charts/
+$ helm repo add sysdig https://charts.sysdig.com/
 ```
 
-to add the `sysdiglabs` Helm chart repository. Then run:
+to add the `sysdig` Helm chart repository. Then run:
 
 ```bash
-$ helm install --name my-release --set sysdig.accessKey=YOUR-KEY-HERE sysdiglabs/sysdig
+$ helm install --namespace sysdig-agent --name sysdig-agent --set sysdig.accessKey=YOUR-KEY-HERE sysdig/sysdig
 ```
 
 After a few seconds, you should see hosts and containers appearing in Sysdig Monitor and Sysdig Secure.
@@ -30,12 +30,12 @@ After a few seconds, you should see hosts and containers appearing in Sysdig Mon
 
 ## Uninstalling the Chart
 
-To uninstall/delete the `my-release` deployment:
+To uninstall/delete the `sysdig-agent` deployment:
 
 ```bash
-$ helm delete my-release
+$ helm delete --namespace sysdig-agent sysdig-agent
 ```
-> **Tip**: Use helm delete --purge my-release to completely remove the release from Helm internal storage
+> **Tip**: Use `helm delete --namespace sysdig-agent --purge sysdig-agent` to completely remove the release from Helm internal storage
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
@@ -47,7 +47,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | ---                                               | ---                                                                                      | ---                                         |
 | `image.registry`                                  | Sysdig Agent image registry                                                              | `docker.io`                                 |
 | `image.repository`                                | The image repository to pull from                                                        | `sysdig/agent`                              |
-| `image.tag`                                       | The image tag to pull                                                                    | `10.7.0`                                    |
+| `image.tag`                                       | The image tag to pull                                                                    | `11.1.2`                                    |
 | `image.pullPolicy`                                | The Image pull policy                                                                    | `IfNotPresent`                              |
 | `image.pullSecrets`                               | Image pull secrets                                                                       | `nil`                                       |
 | `resources.requests.cpu`                          | CPU requested for being run in a node                                                    | `600m`                                      |
@@ -63,6 +63,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `daemonset.nodeSelector`                          | Node Selector                                                                            | `{}`                                        |
 | `daemonset.affinity`                              | Node affinities                                                                          | `schedule on amd64 and linux`               |
 | `daemonset.annotations`                           | Custom annotations for daemonset                                                         | `{}`                                        |
+| `daemonset.probes.initialDelay`                   | Initial delay for liveness and readiness probes. daemonset                                                         | `{}`                                        |
 | `slim.enabled`                                    | Use the slim based Sysdig Agent image                                                    | `false`                                     |
 | `slim.kmoduleImage.repository`                    | The kernel module image builder repository to pull from                                  | `sysdig/agent-kmodule`                      |
 | `slim.resources.requests.cpu`                     | CPU requested for building the kernel module                                             | `1000m`                                     |
@@ -96,7 +97,7 @@ The following table lists the configurable parameters of the Sysdig chart and th
 | `nodeImageAnalyzer.settings.httpsProxy`           | Proxy configuration variables                                                            |                                             |
 | `nodeImageAnalyzer.settings.noProxy`              | Proxy configuration variables                                                            |                                             |
 | `nodeImageAnalyzer.image.repository`              | The image repository to pull the Node Image Analyzer from                                | `sysdig/node-image-analyzer`                |
-| `nodeImageAnalyzer.image.tag`                     | The image tag to pull the Node Image Analyzer                                            | `0.1.6`                                     |
+| `nodeImageAnalyzer.image.tag`                     | The image tag to pull the Node Image Analyzer                                            | `0.1.7`                                     |
 | `nodeImageAnalyzer.image.pullPolicy`              | The Image pull policy for the Node Image Analyzer                                        | `IfNotPresent`                              |
 | `nodeImageAnalyzer.image.pullSecrets`             | Image pull secrets for the Node Image Analyzer                                           | `nil`                                       |
 | `nodeImageAnalyzer.resources.requests.cpu`        | Node Image Analyzer CPU requests per node                                                | `250m`                                      |
@@ -109,15 +110,15 @@ The following table lists the configurable parameters of the Sysdig chart and th
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
-$ helm install --name my-release \
+$ helm install --namespace sysdig-agent --name sysdig-agent \
     --set sysdig.accessKey=YOUR-KEY-HERE,sysdig.settings.tags="role:webserver\,location:europe" \
-    sysdiglabs/sysdig
+    sysdig/sysdig
 ```
 
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install --name my-release -f values.yaml sysdiglabs/sysdig
+$ helm install --namespace sysdig-agent --name sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
@@ -149,12 +150,12 @@ Installing the agent using the Helm chart is also possible in this scenario, and
 For example:
 
 ```bash
-$ helm install --name my-release \
+$ helm install --namespace sysdig-agent --name sysdig-agent \
     --set sysdig.accessKey=YOUR-KEY-HERE \
     --set collectorSettings.collectorHost=42.32.196.18 \
     --set collectorSettings.collectorPort=6443 \
     --set collectorSettings.sslVerifyCertificate=false \
-    sysdiglabs/sysdig
+    sysdig/sysdig
 ```
 
 ## Using private Docker image registry
@@ -188,7 +189,7 @@ Finally, set the accessKey value and you are ready to deploy the Sysdig agent
 using the Helm chart:
 
 ```bash
-$ helm install --name my-release -f values.yaml sysdiglabs/sysdig
+$ helm install --namespace sysdig-agent --name sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 You can read more details about this in [Kubernetes Documentation](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
@@ -209,7 +210,7 @@ sysdig:
 ```
 
 ```bash
-$ helm install --name my-release -f values.yaml sysdiglabs/sysdig
+$ helm install --namespace sysdig-agent --name sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 ## Upgrading Sysdig agent configuration
@@ -230,7 +231,7 @@ sysdig:
 And then, upgrade Helm chart with:
 
 ```bash
-$ helm upgrade my-release -f values.yaml sysdiglabs/sysdig
+$ helm upgrade --namespace sysdig-agent sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 ## How to upgrade to the last version
@@ -244,24 +245,24 @@ $ helm repo update
 In case you deployed the chart with a values.yaml file, you just need to modify (or add if it's missing) the `image.tag` field and execute:
 
 ```bash
-$ helm install --name sysdig -f values.yaml sysdiglabs/sysdig
+$ helm install --namespace sysdig-agent --name sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 If you deployed the chart setting the values as CLI parameters, like for example:
 
 ```bash
 $ helm install \
-    --name sysdig \
+    --namespace sysdig-agent \
+    --name sysdig-agent \
     --set sysdig.accessKey=xxxx \
     --set ebpf.enabled=true \
-    --namespace sysdig-agent \
-    sysdiglabs/sysdig
+    sysdig/sysdig
 ```
 
 You will need to execute:
 
 ```bash
-$ helm upgrade --set image.tag=<last_version> --reuse-values sysdig sysdiglabs/sysdig
+$ helm upgrade --namespace sysdig-agent --set image.tag=<last_version> --reuse-values sysdig-agent sysdig/sysdig
 ```
 
 ## Adding custom AppChecks
@@ -291,12 +292,12 @@ sysdig:
           mykey: myvalue
 ```
 
-The first section, dumps the AppCheck in a Kubernetes configmap and makes it available within the Sysdig agent container. The second, configures it on the `dragent.yaml` file.
+The first section dumps the AppCheck in a Kubernetes configmap and makes it available within the Sysdig agent container. The second one configures it on the `dragent.yaml` file.
 
 Once the values YAML file is ready, we will deploy the Chart like before:
 
 ```bash
-$ helm install --name my-release -f values.yaml sysdiglabs/sysdig
+$ helm install --namespace sysdig-agent --name sysdig-agent -f values.yaml sysdig/sysdig
 ```
 
 ### Automating the generation of custom-app-checks.yaml file
@@ -323,15 +324,15 @@ sysdig:
 You can generate an additional values YAML file with the custom AppChecks:
 
 ```bash
-$ git clone https://github.com/kubernetes/charts.git
-$ cd charts/sysdiglabs/sysdig
+$ git clone https://github.com/sysdiglabs/charts.git
+$ cd charts/sysdig
 $ ./scripts/appchecks2helm appChecks/solr.py appChecks/traefik.py appChecks/nats.py > custom-app-checks.yaml
 ```
 
 And deploy the Chart with both of them:
 
 ```bash
-$ helm install --name my-release -f custom-app-checks.yaml -f values.yaml sysdiglabs/sysdig
+$ helm install --namespace sysdig-agent --name sysdig-agent -f custom-app-checks.yaml -f values.yaml sysdig/sysdig
 ```
 
 ### Adding prometheus.yaml to configure promscrape

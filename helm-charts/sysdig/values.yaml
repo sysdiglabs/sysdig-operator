@@ -9,7 +9,7 @@ image:
 
   registry: docker.io
   repository: sysdig/agent
-  tag: 10.7.0
+  tag: 11.1.2
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -86,6 +86,9 @@ daemonset:
               - linux
   # Allow the DaemonSet to set annotations
   annotations: {}
+  # Liveness and readiness probes initial delay (in seconds)
+  probes:
+    initialDelay: 10
 
 # If is behind a proxy you can set the proxy server
 # This proxy settings apply for the App-Checks.
@@ -175,7 +178,7 @@ nodeImageAnalyzer:
   deploy: true
   image:
     repository: sysdig/node-image-analyzer
-    tag: 0.1.6
+    tag: 0.1.10
     pullPolicy: IfNotPresent
     # pullSecrets:
     #   - name: myRegistrKeySecretName
@@ -214,6 +217,10 @@ nodeImageAnalyzer:
     httpsProxy:
     noProxy:
 
+  # Allow sysdig Node Image Analyzer to run on Kubernetes 1.6 masters
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
 
   # Allow passing extra volumes to the Node Image Analyzer to mount docker socket, cri-o socket, etc.
   extraVolumes:
