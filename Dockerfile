@@ -7,6 +7,10 @@ LABEL description="This operator installs the Sysdig Agent for Sysdig Monitor an
 LABEL vendor="Sysdig"
 COPY LICENSE /licenses/
 
+USER root
+RUN microdnf update
+USER helm
+
 ENV HOME=/opt/helm
 COPY watches.yaml ${HOME}/watches.yaml
 COPY helm-charts  ${HOME}/helm-charts
