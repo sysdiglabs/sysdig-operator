@@ -8,7 +8,7 @@ LABEL vendor="Sysdig"
 COPY LICENSE /licenses/
 
 USER root
-RUN microdnf update
+RUN microdnf install openssl
 USER helm
 
 ENV HOME=/opt/helm
