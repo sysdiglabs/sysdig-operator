@@ -1,5 +1,5 @@
 # Build the manager binary
-FROM quay.io/operator-framework/helm-operator:v1.2.0
+FROM quay.io/operator-framework/helm-operator:v1.5.0
 
 LABEL name="sysdig-operator"
 LABEL summary="Sysdig is a unified platform for container and microservices monitoring, troubleshooting, security and forensics. Sysdig platform has been built on top of Sysdig tool and Sysdig Inspect open-source technologies."
