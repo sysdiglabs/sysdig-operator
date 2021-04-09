@@ -2,7 +2,11 @@ domain: com
 layout: helm.sdk.operatorframework.io/v1
 projectName: sysdig-operator
 resources:
-- group: sysdig
+-
+  # TODO(user): Uncomment the below line if this resource implements a controller, else delete it.
+  # controller: true
+  domain: com
+  group: sysdig
   kind: SysdigAgent
   version: v1
-version: 3-alpha
+version: "3"
