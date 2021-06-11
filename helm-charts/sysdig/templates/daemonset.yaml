@@ -1,4 +1,3 @@
-{{- if .Values.sysdig.accessKey }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -64,6 +63,11 @@ spec:
             allowPrivilegeEscalation: true
           resources:
 {{ toYaml .Values.slim.resources | indent 12 }}
+          {{- if .Values.ebpf.enabled }}
+          env:
+            - name: SYSDIG_BPF_PROBE
+              value:
+          {{- end }}
           volumeMounts:
             - mountPath: /etc/modprobe.d
               name: modprobe-d
@@ -76,6 +80,13 @@ spec:
               readOnly: true
             - mountPath: /host/usr
               name: usr-vol
+              readOnly: true
+            {{- if .Values.ebpf.enabled }}
+            - mountPath: /root/.sysdig
+              name: bpf-probes
+            {{- end }}
+            - mountPath: /host/etc/os-release
+              name: osrel
               readOnly: true
       {{- end }}
       containers:
@@ -164,6 +175,10 @@ spec:
               name: etc-fs
               readOnly: true
             {{- end }}
+            {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
+            - mountPath: /root/.sysdig
+              name: bpf-probes
+            {{- end }}
             {{- if .Values.customAppChecks }}
             - mountPath: /opt/draios/lib/python/checks.custom.d
               name: custom-app-checks-volume
@@ -211,13 +226,21 @@ spec:
           hostPath:
             path: /etc
         {{- end }}
+        {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
+        - name: bpf-probes
+          emptyDir: {}
+        {{- end }}
         - name: sysdig-agent-config
           configMap:
             name: {{ template "sysdig.fullname" . }}
             optional: true
         - name: sysdig-agent-secrets
           secret:
+            {{- if not .Values.sysdig.existingAccessKeySecret }}
             secretName: {{ template "sysdig.fullname" . }}
+            {{- else }}
+            secretName: {{ .Values.sysdig.existingAccessKeySecret }}
+            {{- end -}}
         {{- if .Values.customAppChecks }}
         - name: custom-app-checks-volume
           configMap:
@@ -228,4 +251,3 @@ spec:
         {{- end }}
   updateStrategy:
 {{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
-{{- end }}

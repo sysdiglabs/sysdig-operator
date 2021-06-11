@@ -83,6 +83,27 @@ Return the proper Sysdig Agent image name for the Node Image Analyzer
 {{- end -}}
 
 {{/*
+Return the proper image name for the Image Analyzer
+*/}}
+{{- define "sysdig.image.imageAnalyzer" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.imageAnalyzer.image.repository -}} : {{- .Values.nodeAnalyzer.imageAnalyzer.image.tag -}}
+{{- end -}}
+
+{{/*
+Return the proper image name for the Host Analyzer
+*/}}
+{{- define "sysdig.image.hostAnalyzer" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.hostAnalyzer.image.repository -}} : {{- .Values.nodeAnalyzer.hostAnalyzer.image.tag -}}
+{{- end -}}
+
+{{/*
+Return the proper image name for the Benchmark Runner
+*/}}
+{{- define "sysdig.image.benchmarkRunner" -}}
+    {{- include "sysdig.imageRegistry" . -}} / {{- .Values.nodeAnalyzer.benchmarkRunner.image.repository -}} : {{- .Values.nodeAnalyzer.benchmarkRunner.image.tag -}}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "sysdig.labels" -}}
@@ -105,5 +126,11 @@ NOTE: I don't like the error message! Too much information.
 {{- if $keyValue -}}
     {{- if hasKey .root.Values.sysdig.settings .setting }}{{ fail (printf "Value '%s' is also set via .sysdig.settings.%s'." .key .setting) }}{{- end -}}
     {{- $keyValue -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "deploy-nia" -}}
+{{- if or .Values.nodeImageAnalyzer.deploy .Values.nodeImageAnalyzer.settings.collectorEndpoint -}}
+true
 {{- end -}}
 {{- end -}}
