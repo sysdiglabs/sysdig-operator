@@ -4,6 +4,109 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.7
+
+### Minor changes
+
+- Update agent to 11.3.0
+- Include get/list/create/update/watch leases in agent clusterrole permissions.
+## v.1.12.6
+
+### Cleanup
+
+* Rename `nodeAnalyzer.collectorEndpoint` to `nodeAnalyzer.apiEndpoint` to prevent confusion with the Agent collector.
+* Update README to reflect deprecation of Node Image Analyzer
+
+### Bugfixes
+
+* Fix `collector_endpoint` in configmap for image-analyzer
+* If `nodeImageAnalyzer.settings.collectorEndpoint` is set, deploy old NIA to prevent onboarding instructions from older Sysdig Secure versions from failing.
+
+## v1.12.5
+
+### Bugfixes
+
+* eBPF with Agent slim image did not work on GKE (Google COS)
+
+## v1.12.4
+
+### Bugfixes
+
+* Node analyzer configuration options not being honored due to invalid Configmap name
+* Fix `hostBase` for Host Analyzer
+
+## v1.12.3
+
+### Minor changes
+
+* Fix: Respect existingAccessKeySecret in `daemonset-node-analyzer.yaml`
+* Update documentation links
+
+## v1.12.2
+
+### Minor changes
+
+* Support eBPF with Agent slim image
+
+## v1.12.1
+
+### Minor changes
+
+* Switch default registry from `docker.io` to `quay.io`
+* Update Benchmark Runner to 1.0.6.0
+* Correct error in Host Analyzer Configmap
+
+## v1.12.0
+
+### Major changes
+
+* Add Node Analyzer (`nodeAnalyzer.deploy` set to `true` by default)
+* Explain all Node Analyzer settings in values.yaml and README, and link to official Sysdig docs
+* Disable Node Image Analyzer deployment (`nodeImageAnalyzer.deploy` set to `false` by default)
+
+## v1.11.18
+
+### Minor changes
+
+* Update agent to 11.2.1
+
+## v1.11.17
+
+### Minor changes
+
+* Fix `nodeImageAnalyzer.extraVolumes.volumes` not creating correctly the volumes
+
+## v1.11.16
+
+### Minor changes
+
+* New option `sysdig.existingAccessKeySecret` to use existing or external secrets
+
+## v1.11.15
+
+### Minor changes
+
+* Remove --name installation parameter for `helm install` in README.aws
+
+## v1.11.14
+
+### Minor changes
+
+* Update agent to 11.2.0
+* Remove --name installation parameter for `helm install` in README, unsupported in Helm 3.x
+
+## v1.11.13
+
+### Minor changes
+
+* Update agent to 11.1.3
+
+## v1.11.12
+
+### Minor changes
+
+* Fix in probes initialDelay
+
 ## v1.11.11
 
 ### Minor changes
