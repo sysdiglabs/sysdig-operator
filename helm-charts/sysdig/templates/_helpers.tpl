@@ -50,14 +50,18 @@ Define the proper imageRegistry to use for agent and kmodule image
     {{- .Values.global.imageRegistry -}}
 {{- else -}}
     {{- .Values.image.registry -}}
-{{- end -}} 
+{{- end -}}
 {{- end -}}
 
 {{/*
 Return the proper Sysdig Agent image name
 */}}
 {{- define "sysdig.repositoryName" -}}
-{{- .Values.image.repository -}} {{- if .Values.slim.enabled -}} -slim {{- end -}}
+{{- if .Values.slim.enabled -}}
+    {{- .Values.slim.image.repository -}}
+{{- else -}}
+    {{- .Values.image.repository -}}
+{{- end -}}
 {{- end -}}
 
 {{- define "sysdig.image" -}}
@@ -65,6 +69,28 @@ Return the proper Sysdig Agent image name
     {{- printf .Values.image.overrideValue -}}
 {{- else -}}
     {{- include "sysdig.imageRegistry" . -}} / {{- include "sysdig.repositoryName" . -}} : {{- .Values.image.tag -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Sysdig Agent resources
+*/}}
+{{- define "sysdig.resources" -}}
+{{/* we have same values for both requests and limits */}}
+{{- $smallCpu := "1000m" -}}
+{{- $smallMemory := "1024Mi" -}}
+{{- $mediumCpu := "3000m" -}}
+{{- $mediumMemory := "3072Mi" -}}
+{{- $largeCpu := "5000m" -}}
+{{- $largeMemory := "6144Mi" -}}
+{{- if eq .Values.resourceProfile "small" -}}
+{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $smallCpu $smallMemory $smallCpu $smallMemory -}}
+{{- else if eq .Values.resourceProfile "medium" -}}
+{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $mediumCpu $mediumMemory $mediumCpu $mediumMemory -}}
+{{- else if eq .Values.resourceProfile "large" -}}
+{{- printf "requests:\n  cpu: %s\n  memory: %s\nlimits:\n  cpu: %s\n  memory: %s" $largeCpu $largeMemory $largeCpu $largeMemory -}}
+{{- else -}}{{/* "custom" or anything else falls here */}}
+{{- toYaml .Values.resources -}}
 {{- end -}}
 {{- end -}}
 
@@ -116,10 +142,10 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
 
-{{/* 
+{{/*
 Use like: {{ include "get_or_fail_if_in_settings" (dict "root" . "key" "<mypath.key>" "setting" "<agent_setting>") }}
 Return the value of key "<mypath.key>" and if "<agent_setting>" is also defined in sysdig.settings.<agent_setting>, and error is thrown
-NOTE: I don't like the error message! Too much information. 
+NOTE: I don't like the error message! Too much information.
 */}}
 {{- define "get_or_fail_if_in_settings" -}}
 {{- $keyValue := tpl (printf "{{- .Values.%s -}}" .key) .root }}

@@ -48,10 +48,6 @@ spec:
         - name: sysdig-agent-kmodule
           image: {{ template "sysdig.image.kmodule" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.image.pullSecrets }}
-          imagePullSecrets:
-{{ toYaml .Values.image.pullSecrets | indent 12 }}
-          {{- end }}
           securityContext:
             capabilities:
               drop:
@@ -84,6 +80,9 @@ spec:
             {{- if .Values.ebpf.enabled }}
             - mountPath: /root/.sysdig
               name: bpf-probes
+            - mountPath: /sys/kernel/debug
+              name: sys-tracing
+              readOnly: true
             {{- end }}
             - mountPath: /host/etc/os-release
               name: osrel
@@ -94,7 +93,7 @@ spec:
           image: {{ template "sysdig.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
-{{ toYaml .Values.resources | indent 12 }}
+{{ include "sysdig.resources" . | indent 12 }}
           securityContext:
             capabilities:
               drop:
@@ -130,10 +129,6 @@ spec:
               value: "{{ $value }}"
             {{- end }}
           readinessProbe:
-            exec:
-              command: [ "test", "-e", "/opt/draios/logs/running" ]
-            initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}
-          livenessProbe:
             exec:
               command: [ "test", "-e", "/opt/draios/logs/running" ]
             initialDelaySeconds: {{ .Values.daemonset.probes.initialDelay }}
@@ -178,6 +173,9 @@ spec:
             {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
             - mountPath: /root/.sysdig
               name: bpf-probes
+            - mountPath: /sys/kernel/debug
+              name: sys-tracing
+              readOnly: true
             {{- end }}
             {{- if .Values.customAppChecks }}
             - mountPath: /opt/draios/lib/python/checks.custom.d
@@ -189,6 +187,8 @@ spec:
             {{- if .Values.extraVolumes.mounts }}
 {{ toYaml .Values.extraVolumes.mounts | indent 12 }}
             {{- end }}
+            - mountPath: /etc/podinfo
+              name: podinfo
       volumes:
         - name: modprobe-d
           hostPath:
@@ -229,6 +229,9 @@ spec:
         {{- if (and .Values.ebpf.enabled .Values.slim.enabled) }}
         - name: bpf-probes
           emptyDir: {}
+        - name: sys-tracing
+          hostPath:
+            path: /sys/kernel/debug
         {{- end }}
         - name: sysdig-agent-config
           configMap:
@@ -249,5 +252,17 @@ spec:
         {{- if .Values.extraVolumes.volumes }}
 {{ toYaml .Values.extraVolumes.volumes | indent 8 }}
         {{- end }}
+        - name: podinfo
+          downwardAPI:
+            defaultMode: 420
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+              path: name
   updateStrategy:
 {{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
