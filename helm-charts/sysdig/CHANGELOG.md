@@ -4,12 +4,119 @@
 
 This file documents all notable changes to Sysdig Helm Chart. The release numbering uses [semantic versioning](http://semver.org).
 
+## v1.12.35
+### Minor changes
+
+- Removed invalid imagePullSecrets from initContainers
+
+## v1.12.31
+
+### Minor changes
+
+- Add `slim.image.repository` value to allow full slim agent repo name to be configured
+
+## v1.12.30
+### Minor changes
+
+- Add strorageclass resource in clusterrole
+
+## v1.12.27
+
+### Minor changes
+
+- Add affinity to nodeImageAnalyzer DaemonSet
+
+## v1.12.26
+
+### Minor changes
+
+- Fix Openshift SCC to allow downward API volumes
+
+## v1.12.25
+
+### Minor changes
+
+- Add priorityclass option for image-analyzer daemonset
+
+## v1.12.24
+
+### Minor changes
+
+- Update agent to 12.0.2
+
+## v1.12.23
+
+### Breaking change notification
+
+- In chart version 1.12.13, the default agent container resources was set to [small](https://docs.sysdig.com/en/tuning-sysdig-agent.html). This was a breaking change (and not minor as originally stated) because upgrading the agent using this chart from an earlier chart where the default was [medium](https://docs.sysdig.com/en/tuning-sysdig-agent.html) could result in less resources configured for it than required.
+
+## v1.12.20
+
+### Minor changes
+
+- Add downward API volume to autodetect agent namespace
+
+## v1.12.16
+
+### Minor changes
+
+- Introduce resource profiles
+
+## v1.12.15
+
+### Minor changes
+
+- Add new resources to ClusterRole to support collection of Kubelet metrics.
+
+## v1.12.14
+
+### Minor changes
+
+- Bump host-analyzer version to 0.1.3
+
+## v1.12.13
+
+### Minor changes
+
+- Change the default agent container resources to [the ones for small clusters](https://docs.sysdig.com/en/tuning-sysdig-agent.html)
+
+## v1.12.12
+
+### Bugfixes
+
+* Add mountPath /sys/kernel/debug for eBPF
+
+## v1.12.11
+
+### Minor changes
+
+- Change the default agent container resources
+
+## v1.12.10
+
+### Minor changes
+
+- Update agent to 11.4.1
+
+## v1.12.9
+
+### Minor changes
+
+- Introduce `leaderelection.enable` for the agent leader election algorithm
+
+## v1.12.8
+
+### Minor changes
+
+- Update values.yaml and README.md to reflect no default value for `nodeAnalyzer.apiEndpoint`
+
 ## v1.12.7
 
 ### Minor changes
 
 - Update agent to 11.3.0
 - Include get/list/create/update/watch leases in agent clusterrole permissions.
+
 ## v.1.12.6
 
 ### Cleanup

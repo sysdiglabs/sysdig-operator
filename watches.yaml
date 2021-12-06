@@ -5,4 +5,4 @@
   chart: helm-charts/sysdig
   overrideValues:
     image.overrideValue: ${RELATED_IMAGE_DAEMONSET}
-# +kubebuilder:scaffold:watch
+#+kubebuilder:scaffold:watch

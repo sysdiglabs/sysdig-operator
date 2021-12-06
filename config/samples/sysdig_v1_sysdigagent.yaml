@@ -43,6 +43,8 @@ spec:
     annotations: {}
     env: {}
     nodeSelector: {}
+    probes:
+      initialDelay: 90
     updateStrategy:
       type: RollingUpdate
   ebpf:
@@ -55,18 +57,94 @@ spec:
   image:
     overrideValue: null
     pullPolicy: IfNotPresent
-    registry: docker.io
+    registry: quay.io
     repository: sysdig/agent
-    tag: 10.7.0
-  nodeImageAnalyzer:
+    tag: 12.1.1
+  leaderelection:
+    enable: false
+  nodeAnalyzer:
+    apiEndpoint: ""
+    benchmarkRunner:
+      image:
+        pullPolicy: IfNotPresent
+        repository: sysdig/compliance-benchmark-runner
+        tag: 1.0.6.0
+      resources:
+        limits:
+          cpu: 500m
+          memory: 256Mi
+        requests:
+          cpu: 150m
+          memory: 128Mi
+    debug: false
     deploy: true
+    hostAnalyzer:
+      image:
+        pullPolicy: IfNotPresent
+        repository: sysdig/host-analyzer
+        tag: 0.1.3
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1536Mi
+        requests:
+          cpu: 150m
+          memory: 512Mi
+      schedule: '@dailydefault'
+    httpProxy: null
+    httpsProxy: null
+    imageAnalyzer:
+      extraVolumes:
+        mounts: []
+        volumes: []
+      image:
+        pullPolicy: IfNotPresent
+        repository: sysdig/node-image-analyzer
+        tag: 0.1.15
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1536Mi
+        requests:
+          cpu: 150m
+          memory: 512Mi
+    noProxy: null
+    priorityClassName: null
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+  nodeImageAnalyzer:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
+            - key: kubernetes.io/os
+              operator: In
+              values:
+              - linux
+          - matchExpressions:
+            - key: beta.kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
+            - key: beta.kubernetes.io/os
+              operator: In
+              values:
+              - linux
+    deploy: false
     extraVolumes:
       mounts: []
       volumes: []
     image:
       pullPolicy: IfNotPresent
       repository: sysdig/node-image-analyzer
-      tag: 0.1.6
+      tag: 0.1.15
+    priorityClassName: null
     resources:
       limits:
         cpu: 500m
@@ -79,6 +157,9 @@ spec:
       httpProxy: null
       httpsProxy: null
       noProxy: null
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
   priorityClassName: null
   prometheus:
     file: false
@@ -91,13 +172,7 @@ spec:
     create: true
   rbac:
     create: true
-  resources:
-    limits:
-      cpu: 2000m
-      memory: 1536Mi
-    requests:
-      cpu: 600m
-      memory: 512Mi
+  resourceProfile: small
   scc:
     create: true
   secure:
@@ -107,6 +182,8 @@ spec:
     name: null
   slim:
     enabled: false
+    image:
+      repository: sysdig/agent-slim
     kmoduleImage:
       repository: sysdig/agent-kmodule
     resources:
@@ -118,6 +195,7 @@ spec:
   sysdig:
     accessKey: ""
     disableCaptures: false
+    existingAccessKeySecret: ""
     settings: {}
   timezone: null
   tolerations:

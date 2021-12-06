@@ -49,10 +49,17 @@ spec:
       tolerations:
 {{ toYaml .Values.nodeImageAnalyzer.tolerations | indent 8 }}
       # The following line is necessary for RBAC
-      serviceAccount: {{ template "sysdig.serviceAccountName" .}}
+      serviceAccountName: {{ template "sysdig.serviceAccountName" .}}
+{{- if .Values.nodeImageAnalyzer.priorityClassName }}
+      priorityClassName: "{{ .Values.nodeImageAnalyzer.priorityClassName }}"
+{{- end }}
       {{- if .Values.nodeImageAnalyzer.image.pullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.nodeImageAnalyzer.image.pullSecrets | indent 8 }}
+      {{- end }}
+      {{- if .Values.nodeImageAnalyzer.affinity }}
+      affinity:
+{{ toYaml .Values.nodeImageAnalyzer.affinity | indent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: 5
       containers:
