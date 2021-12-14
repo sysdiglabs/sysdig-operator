@@ -31,10 +31,8 @@ spec:
             type: object
           spec:
             description: Spec defines the desired state of SysdigAgent
-            type: object
             properties:
               sysdig:
-                type: object
                 properties:
                   accessKey:
                     type: string
@@ -45,17 +43,19 @@ spec:
                   settings:
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
+                type: object
                 x-kubernetes-preserve-unknown-fields: true
               tolerations:
-                type: array
                 items:
-                  type: object
                   properties:
                     effect:
                       type: string
                     key:
                       type: string
+                  type: object
                   x-kubernetes-preserve-unknown-fields: true
+                type: array
+            type: object
             x-kubernetes-preserve-unknown-fields: true
           status:
             description: Status defines the observed state of SysdigAgent

@@ -1,0 +1,13 @@
+apiVersion: sysdig.com/v1
+kind: SysdigAgent
+metadata:
+  name: sysdigagent-sample
+spec:
+  sysdig:
+    accessKey: "REPLACE ME"
+    disableCaptures: false
+    existingAccessKeySecret: ""
+    settings: {}
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master

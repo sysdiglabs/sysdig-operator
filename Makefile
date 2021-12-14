@@ -36,7 +36,7 @@ IMAGE_TAG_BASE ?= sysdig-operator
 BUNDLE_IMG ?= $(IMAGE_TAG_BASE)-bundle:v$(VERSION)
 
 # Image URL to use all building/pushing image targets
-IMG ?= scan.connect.redhat.com/ospid-2953a149-0b38-4515-9768-dd548c234edb/sysdig-operator:$(VERSION)
+IMG ?= registry.connect.redhat.com/sysdig/sysdig-operator:$(VERSION)
 
 all: docker-build
 

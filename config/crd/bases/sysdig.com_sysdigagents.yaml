@@ -32,6 +32,30 @@ spec:
           spec:
             description: Spec defines the desired state of SysdigAgent
             type: object
+            properties:
+              sysdig:
+                type: object
+                properties:
+                  accessKey:
+                    type: string
+                  disableCaptures:
+                    type: boolean
+                  existingAccessKeySecret:
+                    type: string
+                  settings:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                x-kubernetes-preserve-unknown-fields: true
+              tolerations:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    effect:
+                      type: string
+                    key:
+                      type: string
+                  x-kubernetes-preserve-unknown-fields: true
             x-kubernetes-preserve-unknown-fields: true
           status:
             description: Status defines the observed state of SysdigAgent
