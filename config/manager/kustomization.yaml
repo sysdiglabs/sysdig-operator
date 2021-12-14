@@ -12,5 +12,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: controller
-  newName: scan.connect.redhat.com/ospid-2953a149-0b38-4515-9768-dd548c234edb/sysdig-operator
+  newName: registry.connect.redhat.com/sysdig/sysdig-operator
   newTag: 1.12.40

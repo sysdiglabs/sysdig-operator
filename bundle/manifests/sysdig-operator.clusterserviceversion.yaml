@@ -12,7 +12,7 @@ metadata:
           },
           "spec": {
             "sysdig": {
-              "accessKey": "",
+              "accessKey": "REPLACE ME",
               "disableCaptures": false,
               "existingAccessKeySecret": "",
               "settings": {}
@@ -44,25 +44,23 @@ spec:
     owned:
     - kind: SysdigAgent
       name: sysdigagents.sysdig.com
-      version: v1
       resources:
       - kind: Service
-        name: ''
+        name: ""
         version: v1
       - kind: DaemonSet
-        name: ''
+        name: ""
         version: v1
       specDescriptors:
-      - description: ''
-        displayName: Tolerations
+      - displayName: Tolerations
         path: tolerations
-      - description: ''
-        displayName: Sysdig
+      - displayName: Sysdig
         path: sysdig
       statusDescriptors:
       - description: The status of the Sysdig Agent
         displayName: Sysdig Agent status
         path: conditions
+      version: v1
   description: |-
     [Sysdig](https://www.sysdig.com/) is a unified platform for container and
     microservices monitoring, troubleshooting, security and forensics. Sysdig
@@ -167,11 +165,11 @@ spec:
       clusterPermissions:
       - rules:
         - apiGroups:
-          - "*"
+          - '*'
           resources:
-          - "*"
+          - '*'
           verbs:
-          - "*"
+          - '*'
         - apiGroups:
           - authentication.k8s.io
           resources:
@@ -204,7 +202,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=sysdig-operator
-                image: registry.connect.redhat.com/sysdig/sysdig-operator@sha256:d6ec93eb0e8a3a13f7a7ac03d362734996c06819f43811383a11c00cab3a0876
+                image: registry.connect.redhat.com/sysdig/sysdig-operator:1.12.40
                 livenessProbe:
                   httpGet:
                     path: /healthz
