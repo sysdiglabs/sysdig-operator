@@ -15,6 +15,18 @@ spec:
   <Helm values>
 ```
 
+# Updates
+
+There are two parts that can be updated: the operator image and the bundle. Ideally, these two parts would be in sync.
+
+To manually perform a chart update:
+```
+cd charts
+git checkout tags/sysdig-<version>
+```
+
+and commit changes. Update the `VERSION` in the Makefile to the checked out chart version, and build the operator and bundle.
+
 # Building
 
 ## Operator
