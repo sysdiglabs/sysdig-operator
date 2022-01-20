@@ -27,6 +27,8 @@ git checkout tags/sysdig-<version>
 
 and commit changes. Update the `VERSION` in the Makefile to the checked out chart version, and build the operator and bundle.
 
+If the bundle alone must be updated without updating the chart, the bundle version will be out of sync with the chart version. At the moment, a bundle update requires a version bump in order to publish.
+
 # Building
 
 ## Operator
