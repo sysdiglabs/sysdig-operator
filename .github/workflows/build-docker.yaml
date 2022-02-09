@@ -27,23 +27,28 @@ jobs:
           registry: scan.connect.redhat.com
           username: ${{ secrets.REDHAT_SCAN_CONNECT_USERNAME }}
           password: ${{ secrets.REDHAT_SCAN_CONNECT_PASSWORD }}
-      - name: Build operator image
-        id: build_image
+      - name: Get build version
+        id: build_version
         run: |
           set -ex
-
-          make docker-build
-
-          BUILT_IMAGE=$(docker images registry.connect.redhat.com/sysdig/sysdig-operator --format "{{.Repository}}:{{.Tag}}" | head -n 1)
-          echo "::set-output name=built_image::${BUILT_IMAGE}"
-
-          BUILT_IMAGE_TAG=$(docker images registry.connect.redhat.com/sysdig/sysdig-operator --format "{{.Tag}}" | head -n 1)
-          echo "::set-output name=built_image_tag::${BUILT_IMAGE_TAG}"
-      - name: Push images
-        uses: akhilerm/tag-push-action@v2.0.0
+          BUILD_VERSION=$(grep -oP 'VERSION \?= \K[0-9]+\.[0-9]+\.[0-9]+' Makefile)
+          echo "::set-output name=build_version::${BUILD_VERSION}"
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          src: ${{ steps.build_image.outputs.built_image }}
-          dst: |
-            scan.connect.redhat.com/ospid-2953a149-0b38-4515-9768-dd548c234edb/sysdig-operator:${{ steps.build_image.outputs.built_image_tag }}
-      #       docker.internal.sysdig.com/utils/sysdig-operator:${{ steps.build_iamges.outputs.built_image_tag }}
-
+          images: |
+            scan.connect.redhat.com/ospid-2953a149-0b38-4515-9768-dd548c234edb/sysdig-operator
+          tags: |
+            ${{ steps.build_version.outputs.build_version }}
+      - name: Print meta
+        run: |
+          echo "Tags: ${{ steps.meta.outputs.tags }}"
+          echo "labels: ${{ steps.meta.outputs.labels }}"
+      - name: Build and push Docker images
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
