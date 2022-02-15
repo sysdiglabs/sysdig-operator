@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      WORKFLOW_DISPATCH_TAG: sysdig-1.12.47
+      WORKFLOW_DISPATCH_TAG: ${{ github.event.inputs.tag }}
       REPOSITORY_DISPATCH_TAG: ${{ github.event.client_payload.tag }}
 
     steps:
