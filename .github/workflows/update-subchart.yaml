@@ -1,0 +1,64 @@
+name: Update subchart
+
+on:
+  repository_dispatch:
+    types: [ sysdig-release ]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'The chart submodule will be updated to this tag'
+
+jobs:
+  update-submodule:
+    runs-on: ubuntu-latest
+
+    env:
+      WORKFLOW_DISPATCH_TAG: ${{ github.event.inputs.tag }}
+      REPOSITORY_DISPATCH_TAG: ${{ github.event.client_payload.tag }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
+      - name: Set tag
+        id: set_tag
+        run: |
+          set -ex
+
+          CHART_TAG=''
+          if [[ ! -z "$REPOSITORY_DISPATCH_TAG" ]]; then
+            echo "::set-output name=chart_tag::${REPOSITORY_DISPATCH_TAG}"
+            CHART_TAG="$REPOSITORY_DISPATCH_TAG"
+          elif [[ ! -z "$WORKFLOW_DISPATCH_TAG" ]]; then
+            echo "::set-output name=chart_tag::${WORKFLOW_DISPATCH_TAG}"
+            CHART_TAG="$WORKFLOW_DISPATCH_TAG"
+          fi
+
+          if [[ ! -z "$CHART_TAG" ]]; then
+            echo "${CHART_TAG} will be checked out!"
+            exit 0
+          else
+            echo "No tag found!"
+            exit 1
+          fi
+      - name: Checkout submodule
+        env:
+          CHART_TAG: ${{ steps.set_tag.outputs.chart_tag }}
+        working-directory: ./charts
+        run: |
+          git checkout $CHART_TAG
+      - name: Update VERSION in Makefile
+        env:
+          CHART_TAG: ${{ steps.set_tag.outputs.chart_tag }}
+        run: |
+          CHART_VERSION=$(echo "${CHART_TAG}" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+          sed -i 's/VERSION\s*?=.*/VERSION ?= '${CHART_VERSION}'/' Makefile
+      - name: Update versions in bundle
+        run: |
+          make bundle
+      - name: Commit back to repo
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update charts submodule to ${{ steps.set_tag.outputs.chart_tag }}
