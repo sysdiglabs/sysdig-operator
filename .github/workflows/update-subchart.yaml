@@ -66,7 +66,9 @@ jobs:
       - name: Update versions in bundle
         run: |
           make bundle
-      - name: Commit back to repo
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Update charts submodule to ${{ steps.set_tag.outputs.chart_tag }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+      # - name: Commit back to repo
+      #   uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     commit_message: Update charts submodule to ${{ steps.set_tag.outputs.chart_tag }}
