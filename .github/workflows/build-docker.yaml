@@ -1,20 +1,34 @@
-name: Docker Build and Push
+name: Docker Build and Push to Red Hat
 
 on:
-  push:
-    branches:
-      - master
+  # push:
+  #   branches:
+  #     - master
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to build and push"
+        type: string
+        required: false
 
 jobs:
   docker:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout master
+        if: "${{ github.event.inputs.branch == '' }}"
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
           submodules: true
+      - name: Checkout branch ${{ github.event.inputs.branch }}
+        if: "${{ github.event.inputs.branch != '' }}"
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
+          ref: ${{ github.event.inputs.branch }}
       - name: Login to Red Hat Connect Scanning
         uses: docker/login-action@v1
         with:
