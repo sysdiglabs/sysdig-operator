@@ -32,14 +32,13 @@ metadata:
     containerImage: registry.connect.redhat.com/sysdig/sysdig-operator@sha256:d6ec93eb0e8a3a13f7a7ac03d362734996c06819f43811383a11c00cab3a0876
     description: |
       Sysdig is a unified platform for container and microservices monitoring, troubleshooting, security and forensics. Sysdig platform has been built on top of Sysdig tool and Sysdig Inspect open-source technologies.
-    operators.operatorframework.io/builder: operator-sdk-v1.15.0
+    operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/sysdiglabs/sysdig-operator
     support: Sysdig, Inc.
-  name: sysdig-operator.v1.12.44
+  name: sysdig-operator.v1.12.48
   namespace: placeholder
 spec:
-  replaces: 1.12.43
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
@@ -308,7 +307,9 @@ spec:
           - create
         serviceAccountName: sysdig-operator-controller-manager
       deployments:
-      - name: sysdig-operator-controller-manager
+      - label:
+          control-plane: controller-manager
+        name: sysdig-operator-controller-manager
         spec:
           replicas: 1
           selector:
@@ -338,7 +339,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=sysdig-operator
-                image: registry.connect.redhat.com/sysdig/sysdig-operator:1.12.43
+                image: registry.connect.redhat.com/sysdig/sysdig-operator:1.12.48
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -437,4 +438,4 @@ spec:
   provider:
     name: Sysdig
     url: https://sysdig.com
-  version: 1.12.44
+  version: 1.12.48
