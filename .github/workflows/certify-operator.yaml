@@ -117,7 +117,7 @@ jobs:
 
       - name: Run Preflight on sysdig-operator
         env:
-          PYXIS_API_KEY=${{ secrets.PYXIS_API_KEY }}
+          PYXIS_API_KEY: ${{ secrets.PYXIS_API_KEY }}
         run: |
           preflight check container \
             --docker-config=/root/.docker/config.json \
