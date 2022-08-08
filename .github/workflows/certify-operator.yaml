@@ -50,6 +50,12 @@ jobs:
           submodules: true
           ref: ${{ github.event.inputs.branch }}
 
+      # workaround a bug where the digest returned by the build and push step
+      # is the imageID, not the remote digest
+      # https://github.com/docker/build-push-action/issues/461#issuecomment-956882637
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Login to Red Hat Connect Scanning
         uses: docker/login-action@v1
         with:
@@ -168,10 +174,12 @@ jobs:
           path: ${{ env.STAGING_DIR }}
 
       - name: Generate new bundle from template
+        env:
+          IMAGE_DIGEST: ${{ env.IMAGE_DIGEST }}
         run: |
           bash -x scripts/template_bundle.sh \
             -v ${{ env.VERSION }} \
-            -i ${{ env.IMAGE_DIGEST }} \
+            -i ${$IMAGE_DIGEST#"sha256:"} \
             -t rh-bundles/${{ matrix.bundle }}/template \
             -d ${{ env.STAGING_DIR }}/operators/${{ matrix.bundle }}
 
