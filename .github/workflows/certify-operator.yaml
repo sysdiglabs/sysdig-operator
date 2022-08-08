@@ -91,7 +91,7 @@ jobs:
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
-          push: false
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
@@ -120,9 +120,9 @@ jobs:
           PYXIS_API_KEY: ${{ secrets.PYXIS_API_KEY }}
         run: |
           preflight check container \
-            --docker-config=/root/.docker/config.json \
+            --docker-config=$HOME/.docker/config.json \
             --submit \
-            --pyxis-api-token=${{ secrets.PYXIS_API_KEY }}
+            --pyxis-api-token=${{ secrets.PYXIS_API_KEY }} \
             --certification-project-id=5e6260d3fe2231a0c28603f0 \
             ${{ env.SCAN_IMAGE }}:${{ needs.docker.outputs.version }}
 
@@ -180,6 +180,7 @@ jobs:
         id: create_pull_request
         uses: peter-evans/create-pull-request@v4
         with:
+          token: ${{ secrets.PULL_REQUEST_GITHUB_TOKEN }}
           path: ${{ env.STAGING_DIR }}
           branch: ${{ env.BRANCH_NAME }}
           push-to-fork: ${{ matrix.repo }}
