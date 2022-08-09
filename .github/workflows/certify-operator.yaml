@@ -94,7 +94,7 @@ jobs:
 
       - name: Build and push Docker images
         id: image_build
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
@@ -173,13 +173,18 @@ jobs:
           fetch-depth: 0
           path: ${{ env.STAGING_DIR }}
 
+      - name: Debug
+        run: |
+          echo ${{ env.VERSION }}
+          echo ${{ env.BRANCH_NAME }}
+          echo ${{ env.IMAGE_DIGEST }}
+          echo ${{ env.STAGING_DIR }}
+
       - name: Generate new bundle from template
-        env:
-          IMAGE_DIGEST: ${{ env.IMAGE_DIGEST }}
         run: |
           bash -x scripts/template_bundle.sh \
             -v ${{ env.VERSION }} \
-            -i ${$IMAGE_DIGEST#"sha256:"} \
+            -i ${IMAGE_DIGEST#"sha256:"} \
             -t rh-bundles/${{ matrix.bundle }}/template \
             -d ${{ env.STAGING_DIR }}/operators/${{ matrix.bundle }}
 
