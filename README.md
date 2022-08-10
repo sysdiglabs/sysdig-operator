@@ -1,4 +1,6 @@
-# Sysdig Helm Operator
+# Sysdig Helm Operator - This Operator has been deprecated and is no longer supported. 
+
+# If you are a RedHad User please use the Operator in the Redhat Marketplace - https://marketplace.redhat.com/en-us/products/sysdig-monitor
 
 The Sysdig operator is a Helm operator for the [`sysdig` chart](https://github.com/sysdiglabs/charts/tree/master/charts/sysdig)
 
