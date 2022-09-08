@@ -13,4 +13,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: registry.connect.redhat.com/sysdig/sysdig-operator
-  newTag: 1.15.33
+  newTag: 1.15.34
