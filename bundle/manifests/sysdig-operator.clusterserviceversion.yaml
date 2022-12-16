@@ -36,7 +36,7 @@ metadata:
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/sysdiglabs/sysdig-operator
     support: Sysdig, Inc.
-  name: sysdig-operator.v1.15.63
+  name: sysdig-operator.v1.15.64
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -339,7 +339,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=sysdig-operator
-                image: registry.connect.redhat.com/sysdig/sysdig-operator:1.15.63
+                image: registry.connect.redhat.com/sysdig/sysdig-operator:1.15.64
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -438,4 +438,4 @@ spec:
   provider:
     name: Sysdig
     url: https://sysdig.com
-  version: 1.15.63
+  version: 1.15.64
