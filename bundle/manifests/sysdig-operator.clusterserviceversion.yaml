@@ -30,9 +30,10 @@ metadata:
     categories: Security, Monitoring
     certified: "true"
     containerImage: registry.connect.redhat.com/sysdig/sysdig-operator@sha256:d6ec93eb0e8a3a13f7a7ac03d362734996c06819f43811383a11c00cab3a0876
+    createdAt: "2022-12-19T14:05:50Z"
     description: |
       Sysdig is a unified platform for container and microservices monitoring, troubleshooting, security and forensics. Sysdig platform has been built on top of Sysdig tool and Sysdig Inspect open-source technologies.
-    operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+    operators.operatorframework.io/builder: operator-sdk-v1.26.0
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/sysdiglabs/sysdig-operator
     support: Sysdig, Inc.
@@ -326,8 +327,8 @@ spec:
                 - --secure-listen-address=0.0.0.0:8443
                 - --upstream=http://127.0.0.1:8080/
                 - --logtostderr=true
-                - --v=10
-                image: registry.redhat.io/openshift4/ose-kube-rbac-proxy:v4.9.0
+                - --v=0
+                image: registry.redhat.io/openshift4/ose-kube-rbac-proxy:v4.11
                 name: kube-rbac-proxy
                 ports:
                 - containerPort: 8443

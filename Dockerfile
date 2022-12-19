@@ -1,5 +1,5 @@
 # Build the manager binary
-FROM quay.io/operator-framework/helm-operator:v1.23
+FROM quay.io/operator-framework/helm-operator:v1.26
 
 # Labels for RH certification
 LABEL name="sysdig-operator"
