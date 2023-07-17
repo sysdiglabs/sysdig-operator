@@ -1,3 +1,28 @@
+
+---
+
+> **Warning**
+> This project is deprecated, as now we are supporting the [helm chart](https://github.com/sysdiglabs/charts) as default installation strategy for the Sysdig Agent.
+>
+> Sysdig will not provide any mantainance or support for this project.
+
+---
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
 # Sysdig Helm Operator
 
 The Sysdig operator is a Helm operator for the [`sysdig` chart](https://github.com/sysdiglabs/charts/tree/master/charts/sysdig)
